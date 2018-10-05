@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.wfsample.beachshirts";
+option java_outer_classname = "Beachshirts";
+
+service Printing {
+    rpc printShirts (PrintRequest) returns (stream Shirt) {}
+}
+
+service Packaging {
+    rpc wrapShirts (WrapRequest) returns (PackedShirts) {}
+}
+
+message ShirtStyle {
+    string name = 1;
+    string imageUrl = 2;
+}
+
+message Shirt {
+    ShirtStyle style = 1;
+}
+
+message PackedShirts {
+    repeated Shirt shirts = 1;
+}
+
+message PrintRequest {
+    ShirtStyle styleToPrint = 1;
+    int32 quantity = 2;
+}
+
+message PrintResponse{
+    repeated Shirt shirts = 1;
+}
+
+message WrapRequest {
+    repeated Shirt shirts = 1;
+}

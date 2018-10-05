@@ -1,0 +1,10 @@
+port: 50052
+
+application: beachshirts
+host: source3
+cluster: us-west
+service: printing
+shard: primary
+
+tags:
+  location: Palo-Alto

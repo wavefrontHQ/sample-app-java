@@ -1,0 +1,16 @@
+server:
+  applicationConnectors:
+  - type: http
+    port: 50051
+  adminConnectors:
+  - type: http
+    port: 50151
+
+application: beachshirts
+host: source2
+cluster: us-west
+service: styling
+shard: primary
+
+tags:
+  location: Palo-Alto

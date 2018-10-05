@@ -1,0 +1,10 @@
+port: 50053
+
+application: beachshirts
+host: source4
+cluster: us-west
+service: packaging
+shard: primary
+
+tags:
+  location: Palo-Alto
