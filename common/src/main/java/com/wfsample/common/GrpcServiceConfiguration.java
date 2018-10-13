@@ -32,7 +32,7 @@ public class GrpcServiceConfiguration {
   @NotEmpty
   private String service = "defaultService";
 
-  private String shard = "deafultShard";
+  private String shard = "defaultShard";
 
   private Map<String, String> tags = new HashMap<>();
 

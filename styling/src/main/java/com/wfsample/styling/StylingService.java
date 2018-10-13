@@ -69,11 +69,9 @@ public class StylingService extends Application<ApplicationConfiguration> {
       shirtStyleDTOS.add(dto);
       shirtStyleDTOS.add(dto2);
       ManagedChannel printingChannel = ManagedChannelBuilder.forAddress("localhost",
-          configuration.getPrintingPort())
-          .usePlaintext().build();
+          configuration.getPrintingPort()).usePlaintext().build();
       ManagedChannel packagingChannel = ManagedChannelBuilder.forAddress("localhost",
-          configuration.getPackagingPort())
-          .usePlaintext().build();
+          configuration.getPackagingPort()).usePlaintext().build();
       printing = PrintingGrpc.newBlockingStub(printingChannel);
       packaging = PackagingGrpc.newBlockingStub(packagingChannel);
 
