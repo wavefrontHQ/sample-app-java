@@ -3,8 +3,8 @@ package com.wfsample.printing;
 import com.wfsample.beachshirts.PrintRequest;
 import com.wfsample.beachshirts.PrintingGrpc;
 import com.wfsample.beachshirts.Shirt;
-import com.wfsample.common.GrpcServiceConfiguration;
 import com.wfsample.common.BeachshirtsUtils;
+import com.wfsample.common.GrpcServiceConfiguration;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -18,7 +18,7 @@ import io.grpc.stub.StreamObserver;
 public class PrintingService {
 
   public PrintingService(GrpcServiceConfiguration config) throws Exception {
-    ServerBuilder builder = ServerBuilder.forPort(Integer.parseInt(config.getPort())).
+    ServerBuilder builder = ServerBuilder.forPort(config.getGrpcPort()).
         addService(new PrintingImpl(config));
     Server printingServer = builder.build();
     System.out.println("Starting printing server");

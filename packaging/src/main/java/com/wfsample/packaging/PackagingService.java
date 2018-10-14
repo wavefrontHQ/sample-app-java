@@ -3,8 +3,8 @@ package com.wfsample.packaging;
 import com.wfsample.beachshirts.PackagingGrpc;
 import com.wfsample.beachshirts.PackedShirts;
 import com.wfsample.beachshirts.WrapRequest;
-import com.wfsample.common.GrpcServiceConfiguration;
 import com.wfsample.common.BeachshirtsUtils;
+import com.wfsample.common.GrpcServiceConfiguration;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -17,8 +17,8 @@ import io.grpc.stub.StreamObserver;
  */
 public class PackagingService {
 
-  public PackagingService(GrpcServiceConfiguration configuration) throws Exception {
-    ServerBuilder builder = ServerBuilder.forPort(Integer.parseInt(configuration.getPort())).
+  public PackagingService(GrpcServiceConfiguration config) throws Exception {
+    ServerBuilder builder = ServerBuilder.forPort(config.getGrpcPort()).
         addService(new PackagingImpl());
     Server packaging = builder.build();
     System.out.println("Starting Packaging server ...");

@@ -6,11 +6,11 @@ server:
   - type: http
     port: 50151
 
-application: beachshirts
-host: source2
-cluster: us-west
-service: styling
-shard: primary
-
-tags:
-  location: Palo-Alto
+metadata:
+  application: beachshirts
+  cluster: us-west
+  service: styling
+  shard: primary
+  tags:
+    location: Palo-Alto
+    env: production

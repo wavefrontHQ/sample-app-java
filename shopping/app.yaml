@@ -10,11 +10,11 @@ stylingPort: 50051
 printingPort: 50052
 packagingPort: 50053
 
-application: beachshirts
-host: source1
-cluster: us-west
-service: shopping
-shard: primary
-
-tags:
-  location: Palo-Alto
+metadata:
+  application: beachshirts
+  cluster: us-west
+  service: shopping
+  shard: primary
+  tags:
+    location: Palo-Alto
+    env: production

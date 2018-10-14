@@ -2,10 +2,7 @@ package com.wfsample.common;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-import java.util.HashMap;
-import java.util.Map;
+import javax.annotation.Nonnull;
 
 /**
  * gRPC based service configuration.
@@ -14,60 +11,25 @@ import java.util.Map;
  */
 public class GrpcServiceConfiguration {
 
-  @NotEmpty
-  private String host = "localhost";
+  /**
+   * Port on which gRPC service will run on.
+   */
+  @JsonProperty
+  private int grpcPort = 0;
 
-  @NotEmpty
-  private String port = "2878";
+  /**
+   * Metadata associated with a specific instance of a service.
+   */
+  @Nonnull
+  @JsonProperty
+  private MetadataConfiguration metadata = new MetadataConfiguration();
 
-  @NotEmpty
-  private String application = "defaultApplication";
-
-  private String cluster = "defaultCluster";
-
-  public void setService(String service) {
-    this.service = service;
+  public int getGrpcPort() {
+    return grpcPort;
   }
 
-  @NotEmpty
-  private String service = "defaultService";
-
-  private String shard = "defaultShard";
-
-  private Map<String, String> tags = new HashMap<>();
-
-  @JsonProperty
-  public String getHost() {
-    return host;
-  }
-
-  @JsonProperty
-  public String getPort() {
-    return port;
-  }
-
-  @JsonProperty
-  public String getApplication() {
-    return application;
-  }
-
-  @JsonProperty
-  public String getCluster() {
-    return cluster;
-  }
-
-  @JsonProperty
-  public String getService() {
-    return service;
-  }
-
-  @JsonProperty
-  public String getShard() {
-    return shard;
-  }
-
-  @JsonProperty
-  public Map<String, String> getTags() {
-    return tags;
+  @Nonnull
+  public MetadataConfiguration getMetadata() {
+    return metadata;
   }
 }
