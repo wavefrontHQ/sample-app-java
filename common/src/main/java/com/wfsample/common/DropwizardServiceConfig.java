@@ -49,4 +49,9 @@ public class DropwizardServiceConfig extends Configuration {
   public int getPackagingPort() {
     return packagingPort;
   }
+
+  @Nonnull
+  public MetadataConfig getMetadata() {
+    return metadata;
+  }
 }
