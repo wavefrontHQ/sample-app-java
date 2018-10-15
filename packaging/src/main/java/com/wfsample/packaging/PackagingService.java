@@ -3,7 +3,7 @@ package com.wfsample.packaging;
 import com.wfsample.beachshirts.PackagingGrpc;
 import com.wfsample.beachshirts.PackedShirts;
 import com.wfsample.beachshirts.WrapRequest;
-import com.wfsample.common.BeachshirtsUtils;
+import com.wfsample.common.BeachShirtsUtils;
 import com.wfsample.common.GrpcServiceConfiguration;
 
 import io.grpc.Server;
@@ -28,7 +28,7 @@ public class PackagingService {
   }
 
   public static void main(String[] args) throws Exception {
-    GrpcServiceConfiguration configuration = BeachshirtsUtils.scenarioFromFile(args[0]);
+    GrpcServiceConfiguration configuration = BeachShirtsUtils.scenarioFromFile(args[0]);
     new PackagingService(configuration);
   }
 

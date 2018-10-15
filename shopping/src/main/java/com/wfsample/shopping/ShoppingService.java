@@ -23,7 +23,7 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 import okhttp3.OkHttpClient;
 
-import static com.wfsample.common.BeachshirtsUtils.httpGet;
+import static com.wfsample.common.BeachShirtsUtils.httpGet;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 /**
@@ -47,15 +47,15 @@ public class ShoppingService extends Application<DropwizardServiceConfiguration>
   public void run(DropwizardServiceConfiguration configuration, Environment environment)
       throws Exception {
     this.configuration = configuration;
-    environment.jersey().register(new BeachShirtsWebResource());
+    environment.jersey().register(new ShoppingWebResource());
   }
 
   @Path("/shop")
   @Produces(MediaType.APPLICATION_JSON)
-  public class BeachShirtsWebResource {
+  public class ShoppingWebResource {
     private OkHttpClient client;
 
-    public BeachShirtsWebResource() {
+    public ShoppingWebResource() {
       this.client = new OkHttpClient().newBuilder().readTimeout(2, TimeUnit.MINUTES).build();
     }
 

@@ -3,7 +3,7 @@ package com.wfsample.printing;
 import com.wfsample.beachshirts.PrintRequest;
 import com.wfsample.beachshirts.PrintingGrpc;
 import com.wfsample.beachshirts.Shirt;
-import com.wfsample.common.BeachshirtsUtils;
+import com.wfsample.common.BeachShirtsUtils;
 import com.wfsample.common.GrpcServiceConfiguration;
 
 import io.grpc.Server;
@@ -28,7 +28,7 @@ public class PrintingService {
   }
 
   public static void main(String[] args) throws Exception {
-    GrpcServiceConfiguration conf = BeachshirtsUtils.scenarioFromFile(args[0]);
+    GrpcServiceConfiguration conf = BeachShirtsUtils.scenarioFromFile(args[0]);
     new PrintingService(conf);
   }
 

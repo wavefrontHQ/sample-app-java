@@ -11,6 +11,6 @@ metadata:
   cluster: us-west
   service: styling
   shard: primary
-  tags:
+  customTags:
     location: Palo-Alto
     env: production

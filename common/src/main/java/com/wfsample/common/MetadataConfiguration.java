@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * Service related metadata like application its part of and various tags.
+ * Service related metadata like application its part of and various customTags.
  *
  * @author Srujan Narkedamalli (snarkedamall@wavefront.com).
  */
@@ -43,11 +43,11 @@ public class MetadataConfiguration {
   private String shard;
 
   /**
-   * Custom tags for the service.
+   * Custom customTags for the service.
    */
   @Nullable
   @JsonProperty
-  Map<String, String> tags;
+  Map<String, String> customTags;
 
   @Nonnull
   public String getApplication() {
@@ -70,7 +70,7 @@ public class MetadataConfiguration {
   }
 
   @Nullable
-  public Map<String, String> getTags() {
-    return tags;
+  public Map<String, String> getCustomTags() {
+    return customTags;
   }
 }

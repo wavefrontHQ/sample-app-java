@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option java_multiple_files = true;
 option java_package = "com.wfsample.beachshirts";
-option java_outer_classname = "Beachshirts";
+option java_outer_classname = "BeachShirts";
 
 service Printing {
     rpc printShirts (PrintRequest) returns (stream Shirt) {}

@@ -20,9 +20,9 @@ import okhttp3.Response;
  *
  * @author Srujan Narkedamalli (snarkedamall@wavefront.com).
  */
-public final class BeachshirtsUtils {
+public final class BeachShirtsUtils {
 
-  private BeachshirtsUtils() {
+  private BeachShirtsUtils() {
   }
 
   public static <V> V httpGet(OkHttpClient client, String host, int port, String pathSegments,
