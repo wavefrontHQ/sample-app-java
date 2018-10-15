@@ -4,7 +4,7 @@ import com.wfsample.beachshirts.PrintRequest;
 import com.wfsample.beachshirts.PrintingGrpc;
 import com.wfsample.beachshirts.Shirt;
 import com.wfsample.common.BeachShirtsUtils;
-import com.wfsample.common.GrpcServiceConfiguration;
+import com.wfsample.common.GrpcServiceConfig;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -17,7 +17,7 @@ import io.grpc.stub.StreamObserver;
  */
 public class PrintingService {
 
-  public PrintingService(GrpcServiceConfiguration config) throws Exception {
+  public PrintingService(GrpcServiceConfig config) throws Exception {
     ServerBuilder builder = ServerBuilder.forPort(config.getGrpcPort()).
         addService(new PrintingImpl(config));
     Server printingServer = builder.build();
@@ -28,15 +28,15 @@ public class PrintingService {
   }
 
   public static void main(String[] args) throws Exception {
-    GrpcServiceConfiguration conf = BeachShirtsUtils.scenarioFromFile(args[0]);
+    GrpcServiceConfig conf = BeachShirtsUtils.scenarioFromFile(args[0]);
     new PrintingService(conf);
   }
 
   static class PrintingImpl extends PrintingGrpc.PrintingImplBase {
-    private final GrpcServiceConfiguration conf;
+    private final GrpcServiceConfig conf;
 
-    public PrintingImpl(GrpcServiceConfiguration grpcServiceConfiguration) {
-      this.conf = grpcServiceConfiguration;
+    public PrintingImpl(GrpcServiceConfig grpcServiceConfig) {
+      this.conf = grpcServiceConfig;
     }
 
     @Override

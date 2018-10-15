@@ -4,7 +4,7 @@ import com.wfsample.beachshirts.PackagingGrpc;
 import com.wfsample.beachshirts.PackedShirts;
 import com.wfsample.beachshirts.WrapRequest;
 import com.wfsample.common.BeachShirtsUtils;
-import com.wfsample.common.GrpcServiceConfiguration;
+import com.wfsample.common.GrpcServiceConfig;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -17,7 +17,7 @@ import io.grpc.stub.StreamObserver;
  */
 public class PackagingService {
 
-  public PackagingService(GrpcServiceConfiguration config) throws Exception {
+  public PackagingService(GrpcServiceConfig config) throws Exception {
     ServerBuilder builder = ServerBuilder.forPort(config.getGrpcPort()).
         addService(new PackagingImpl());
     Server packaging = builder.build();
@@ -28,7 +28,7 @@ public class PackagingService {
   }
 
   public static void main(String[] args) throws Exception {
-    GrpcServiceConfiguration configuration = BeachShirtsUtils.scenarioFromFile(args[0]);
+    GrpcServiceConfig configuration = BeachShirtsUtils.scenarioFromFile(args[0]);
     new PackagingService(configuration);
   }
 

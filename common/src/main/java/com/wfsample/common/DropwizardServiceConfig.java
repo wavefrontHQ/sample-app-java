@@ -11,7 +11,7 @@ import io.dropwizard.Configuration;
  *
  * @author Srujan Narkedamalli (snarkedamall@wavefront.com).
  */
-public class DropwizardServiceConfiguration extends Configuration {
+public class DropwizardServiceConfig extends Configuration {
 
   /**
    * Port on which the styling service is running.
@@ -36,7 +36,7 @@ public class DropwizardServiceConfiguration extends Configuration {
    */
   @Nonnull
   @JsonProperty
-  private MetadataConfiguration metadata = new MetadataConfiguration();
+  private MetadataConfig metadata = new MetadataConfig();
 
   public int getStylingPort() {
     return stylingPort;

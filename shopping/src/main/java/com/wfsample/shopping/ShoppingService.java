@@ -1,6 +1,6 @@
 package com.wfsample.shopping;
 
-import com.wfsample.common.DropwizardServiceConfiguration;
+import com.wfsample.common.DropwizardServiceConfig;
 import com.wfsample.common.dto.OrderDTO;
 import com.wfsample.common.dto.OrderStatusDTO;
 import com.wfsample.common.dto.ShirtStyleDTO;
@@ -32,8 +32,8 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
  *
  * @author Srujan Narkedamalli (snarkedamall@wavefront.com).
  */
-public class ShoppingService extends Application<DropwizardServiceConfiguration> {
-  private DropwizardServiceConfiguration configuration;
+public class ShoppingService extends Application<DropwizardServiceConfig> {
+  private DropwizardServiceConfig configuration;
 
   private ShoppingService() {
 
@@ -44,7 +44,7 @@ public class ShoppingService extends Application<DropwizardServiceConfiguration>
   }
 
   @Override
-  public void run(DropwizardServiceConfiguration configuration, Environment environment)
+  public void run(DropwizardServiceConfig configuration, Environment environment)
       throws Exception {
     this.configuration = configuration;
     environment.jersey().register(new ShoppingWebResource());

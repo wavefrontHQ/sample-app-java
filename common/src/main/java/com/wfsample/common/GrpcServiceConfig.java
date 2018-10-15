@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
  *
  * Srujan Narkedamalli (snarkedamall@wavefront.com).
  */
-public class GrpcServiceConfiguration {
+public class GrpcServiceConfig {
 
   /**
    * Port on which gRPC service will run on.
@@ -22,14 +22,14 @@ public class GrpcServiceConfiguration {
    */
   @Nonnull
   @JsonProperty
-  private MetadataConfiguration metadata = new MetadataConfiguration();
+  private MetadataConfig metadata = new MetadataConfig();
 
   public int getGrpcPort() {
     return grpcPort;
   }
 
   @Nonnull
-  public MetadataConfiguration getMetadata() {
+  public MetadataConfig getMetadata() {
     return metadata;
   }
 }

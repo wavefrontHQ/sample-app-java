@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
  *
  * @author Srujan Narkedamalli (snarkedamall@wavefront.com).
  */
-public class MetadataConfiguration {
+public class MetadataConfig {
 
   /**
    * Application in which service is part of.

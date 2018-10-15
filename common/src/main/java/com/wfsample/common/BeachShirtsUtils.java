@@ -51,15 +51,15 @@ public final class BeachShirtsUtils {
     }
   }
 
-  public static GrpcServiceConfiguration scenarioFromFile(String file) throws IOException {
+  public static GrpcServiceConfig scenarioFromFile(String file) throws IOException {
     File configFile = new File(file);
-    GrpcServiceConfiguration config;
+    GrpcServiceConfig config;
     if (configFile.exists()) {
       YAMLFactory factory = new YAMLFactory(new ObjectMapper());
       YAMLParser parser = factory.createParser(configFile);
-      config = parser.readValueAs(GrpcServiceConfiguration.class);
+      config = parser.readValueAs(GrpcServiceConfig.class);
     } else {
-      config = new GrpcServiceConfiguration();
+      config = new GrpcServiceConfig();
     }
     return config;
   }

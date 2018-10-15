@@ -6,7 +6,7 @@ import com.wfsample.beachshirts.PrintingGrpc;
 import com.wfsample.beachshirts.Shirt;
 import com.wfsample.beachshirts.ShirtStyle;
 import com.wfsample.beachshirts.WrapRequest;
-import com.wfsample.common.DropwizardServiceConfiguration;
+import com.wfsample.common.DropwizardServiceConfig;
 import com.wfsample.common.dto.OrderStatusDTO;
 import com.wfsample.common.dto.ShirtStyleDTO;
 
@@ -34,8 +34,8 @@ import io.grpc.ManagedChannelBuilder;
  *
  * @author Srujan Narkedamalli (snarkedamall@wavefront.com).
  */
-public class StylingService extends Application<DropwizardServiceConfiguration> {
-  private DropwizardServiceConfiguration configuration;
+public class StylingService extends Application<DropwizardServiceConfig> {
+  private DropwizardServiceConfig configuration;
 
   private StylingService() {
   }
@@ -45,7 +45,7 @@ public class StylingService extends Application<DropwizardServiceConfiguration> 
   }
 
   @Override
-  public void run(DropwizardServiceConfiguration configuration, Environment environment)
+  public void run(DropwizardServiceConfig configuration, Environment environment)
       throws Exception {
     this.configuration = configuration;
     environment.jersey().register(new StylingWebResource());
