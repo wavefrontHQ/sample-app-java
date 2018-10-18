@@ -1,0 +1,10 @@
+grpcPort: 50053
+
+metadata:
+  application: beachshirts
+  cluster: us-west
+  service: packaging
+  shard: primary
+  customTags:
+    location: Palo-Alto
+    env: production

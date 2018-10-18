@@ -1,0 +1,16 @@
+server:
+  applicationConnectors:
+  - type: http
+    port: 50051
+  adminConnectors:
+  - type: http
+    port: 50151
+
+metadata:
+  application: beachshirts
+  cluster: us-west
+  service: styling
+  shard: primary
+  customTags:
+    location: Palo-Alto
+    env: production
