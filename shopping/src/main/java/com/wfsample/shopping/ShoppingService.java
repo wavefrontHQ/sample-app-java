@@ -1,12 +1,19 @@
 package com.wfsample.shopping;
 
+import com.wfsample.common.BeachShirtsUtils;
 import com.wfsample.common.DropwizardServiceConfig;
 import com.wfsample.common.dto.OrderDTO;
-import com.wfsample.common.dto.OrderStatusDTO;
-import com.wfsample.common.dto.ShirtStyleDTO;
+import com.wfsample.service.StylingApi;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.jboss.resteasy.client.jaxrs.ResteasyClient;
+import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
+import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
+import org.jboss.resteasy.client.jaxrs.engines.ApacheHttpClient4Engine;
+import org.jboss.resteasy.plugins.providers.jackson.ResteasyJackson2Provider;
+import org.jboss.resteasy.spi.ResteasyProviderFactory;
+
 import java.util.concurrent.TimeUnit;
 
 import javax.ws.rs.Consumes;
@@ -21,9 +28,7 @@ import javax.ws.rs.core.Response;
 
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
-import okhttp3.OkHttpClient;
 
-import static com.wfsample.common.BeachShirtsUtils.httpGet;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 /**
@@ -47,36 +52,32 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
   public void run(DropwizardServiceConfig configuration, Environment environment)
       throws Exception {
     this.configuration = configuration;
-    environment.jersey().register(new ShoppingWebResource());
+    String url = "http://localhost:" + configuration.getStylingPort();
+    environment.jersey().register(new ShoppingWebResource(
+        BeachShirtsUtils.createProxyClient(url, StylingApi.class)));
   }
 
   @Path("/shop")
   @Produces(MediaType.APPLICATION_JSON)
   public class ShoppingWebResource {
-    private OkHttpClient client;
+    private final StylingApi stylingApi;
 
-    public ShoppingWebResource() {
-      this.client = new OkHttpClient().newBuilder().readTimeout(2, TimeUnit.MINUTES).build();
+    public ShoppingWebResource(StylingApi stylingApi) {
+      this.stylingApi = stylingApi;
     }
 
     @GET
     @Path("/menu")
     public Response getShoppingMenu(@Context HttpHeaders httpHeaders) {
-      ShirtStyleDTO[] styles = httpGet(client, "localhost", configuration.getStylingPort(),
-          "style", null, ShirtStyleDTO[].class, "getAlStyles");
-      return Response.ok(styles).build();
+      return Response.ok(stylingApi.getAllStyles()).build();
     }
 
     @POST
     @Path("/order")
     @Consumes(APPLICATION_JSON)
     public Response orderShirts(OrderDTO orderDTO, @Context HttpHeaders httpHeaders) {
-      Map<String, String> queryParameters = new HashMap<>();
-      queryParameters.put("quantity", Integer.toString(orderDTO.getQuantity()));
-      OrderStatusDTO statusDTO = httpGet(client, "localhost", configuration.getStylingPort(),
-          "style/" + orderDTO.getStyleName() + "/make", queryParameters, OrderStatusDTO.class,
-          "makeShirts");
-      return Response.ok(statusDTO).build();
+      return Response.ok(
+          stylingApi.makeShirts(orderDTO.getStyleName(), orderDTO.getQuantity())).build();
     }
   }
 }

@@ -8,7 +8,9 @@ import com.wfsample.beachshirts.ShirtStyle;
 import com.wfsample.beachshirts.WrapRequest;
 import com.wfsample.common.DropwizardServiceConfig;
 import com.wfsample.common.dto.OrderStatusDTO;
+import com.wfsample.common.dto.ShirtDTO;
 import com.wfsample.common.dto.ShirtStyleDTO;
+import com.wfsample.service.StylingApi;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -51,9 +53,7 @@ public class StylingService extends Application<DropwizardServiceConfig> {
     environment.jersey().register(new StylingWebResource());
   }
 
-  @Path("/style")
-  @Produces(MediaType.APPLICATION_JSON)
-  public class StylingWebResource {
+  public class StylingWebResource implements StylingApi {
     // sample set of static styles.
     private List<ShirtStyleDTO> shirtStyleDTOS = new ArrayList<>();
     private final PrintingGrpc.PrintingBlockingStub printing;
@@ -77,20 +77,16 @@ public class StylingService extends Application<DropwizardServiceConfig> {
 
     }
 
-    @GET
-    public Response getAllStyles() {
-      return Response.ok(shirtStyleDTOS).build();
+    public List<ShirtStyleDTO> getAllStyles() {
+      return shirtStyleDTOS;
     }
 
-    @GET
-    @Path("{id}/make")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response makeShirts(@PathParam("id") String id, @QueryParam("quantity") int quantity) {
+    public OrderStatusDTO makeShirts(String id, int quantity) {
       Iterator<Shirt> shirts = printing.printShirts(PrintRequest.newBuilder().
           setStyleToPrint(ShirtStyle.newBuilder().setName(id).setImageUrl(id + "Image").build()).
           setQuantity(quantity).build());
       packaging.wrapShirts(WrapRequest.newBuilder().addAllShirts(() -> shirts).build());
-      return Response.ok(new OrderStatusDTO("completed")).build();
+      return new OrderStatusDTO("completed");
     }
   }
 }
