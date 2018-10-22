@@ -4,16 +4,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLParser;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.jboss.resteasy.client.jaxrs.ResteasyClient;
+import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
+import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
+import org.jboss.resteasy.client.jaxrs.engines.ApacheHttpClient4Engine;
+import org.jboss.resteasy.plugins.providers.jackson.ResteasyJackson2Provider;
+import org.jboss.resteasy.spi.ResteasyProviderFactory;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
-
-import javax.annotation.Nullable;
-
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * Utilities for use by the various beachshirts application related services.
@@ -25,30 +26,16 @@ public final class BeachShirtsUtils {
   private BeachShirtsUtils() {
   }
 
-  public static <V> V httpGet(OkHttpClient client, String host, int port, String pathSegments,
-                              @Nullable Map<String, String> queryParameters,
-                              Class<V> responseType, String operationName) {
-    HttpUrl.Builder urlBuilder = new HttpUrl.Builder().scheme("http").host(host).port(port).
-        addPathSegments(pathSegments);
-    if (queryParameters != null) {
-      for (Map.Entry<String, String> parameter : queryParameters.entrySet()) {
-        urlBuilder.addQueryParameter(parameter.getKey(), parameter.getValue());
-      }
-    }
-    HttpUrl url = urlBuilder.build();
-    Request.Builder requestBuilder = new Request.Builder().url(url);
-    Request request = requestBuilder.build();
-    try {
-      Response response = client.newCall(request).execute();
-      if (response.code() != 200) {
-        response.close();
-        throw new RuntimeException("Bad HTTP result: " + response);
-      }
-      ObjectMapper mapper = new ObjectMapper();
-      return mapper.readValue(response.body().bytes(), responseType);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
+  public static <T> T createProxyClient(String url, Class<T> clazz) {
+    HttpClient httpClient = HttpClientBuilder.create().setMaxConnTotal(2000).
+        setMaxConnPerRoute(1000).build();
+    ApacheHttpClient4Engine apacheHttpClient4Engine = new ApacheHttpClient4Engine(httpClient, true);
+    ResteasyProviderFactory factory = ResteasyProviderFactory.getInstance();
+    factory.registerProvider(ResteasyJackson2Provider.class);
+    ResteasyClient resteasyClient = new ResteasyClientBuilder().
+        httpEngine(apacheHttpClient4Engine).providerFactory(factory).build();
+    ResteasyWebTarget target = resteasyClient.target(url);
+    return target.proxy(clazz);
   }
 
   public static GrpcServiceConfig scenarioFromFile(String file) throws IOException {
