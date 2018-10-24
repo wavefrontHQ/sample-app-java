@@ -5,17 +5,6 @@ import com.wfsample.common.DropwizardServiceConfig;
 import com.wfsample.common.dto.OrderDTO;
 import com.wfsample.service.StylingApi;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.jboss.resteasy.client.jaxrs.ResteasyClient;
-import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
-import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
-import org.jboss.resteasy.client.jaxrs.engines.ApacheHttpClient4Engine;
-import org.jboss.resteasy.plugins.providers.jackson.ResteasyJackson2Provider;
-import org.jboss.resteasy.spi.ResteasyProviderFactory;
-
-import java.util.concurrent.TimeUnit;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -41,7 +30,6 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
   private DropwizardServiceConfig configuration;
 
   private ShoppingService() {
-
   }
 
   public static void main(String[] args) throws Exception {
@@ -52,7 +40,7 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
   public void run(DropwizardServiceConfig configuration, Environment environment)
       throws Exception {
     this.configuration = configuration;
-    String url = "http://localhost:" + configuration.getStylingPort();
+    String url = "http://" + configuration.getStylingHost() + ":" + configuration.getStylingPort();
     environment.jersey().register(new ShoppingWebResource(
         BeachShirtsUtils.createProxyClient(url, StylingApi.class)));
   }
