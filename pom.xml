@@ -17,6 +17,7 @@
         <module>styling</module>
         <module>printing</module>
         <module>packaging</module>
+        <module>delivery</module>
         <module>common</module>
     </modules>
 
@@ -25,6 +26,7 @@
         <dropwizard.version>1.3.5</dropwizard.version>
         <grpc.version>1.12.0</grpc.version>
         <jackson.version>2.9.6</jackson.version>
+        <spring.version>1.5.17.RELEASE</spring.version>
     </properties>
 
     <dependencies>
