@@ -5,12 +5,3 @@ server:
   adminConnectors:
   - type: http
     port: 50151
-
-metadata:
-  application: beachshirts
-  cluster: us-west
-  service: styling
-  shard: primary
-  customTags:
-    location: Palo-Alto
-    env: production
