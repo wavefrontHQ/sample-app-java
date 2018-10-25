@@ -1,18 +1,2 @@
 server:
   port: 50054
-
-metadata:
-  application: beachshirts
-  cluster: us-west
-  service: delivery
-  shard: primary
-  customTags:
-    location: Palo-Alto
-    env: production
-
-wavefrontReporting:
-  reportingMechanism: "DIRECT"
-  server: "replace-with-wavefront-url"
-  token: "wavefront-token"
-  flushIntervalSeconds: 1
-  source: wavefront-source20
