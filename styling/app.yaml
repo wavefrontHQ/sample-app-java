@@ -6,11 +6,8 @@ server:
   - type: http
     port: 50151
 
-metadata:
-  application: beachshirts
-  cluster: us-west
-  service: styling
-  shard: primary
-  customTags:
-    location: Palo-Alto
-    env: production
+printingPort: 50052
+packagingPort: 50053
+
+printingHost: "localhost"
+packagingHost: "localhost"
