@@ -5,3 +5,9 @@ server:
   adminConnectors:
   - type: http
     port: 50151
+
+printingPort: 50052
+packagingPort: 50053
+
+printingHost: "localhost"
+packagingHost: "localhost"

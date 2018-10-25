@@ -8,22 +8,12 @@ import com.wfsample.beachshirts.ShirtStyle;
 import com.wfsample.beachshirts.WrapRequest;
 import com.wfsample.common.DropwizardServiceConfig;
 import com.wfsample.common.dto.OrderStatusDTO;
-import com.wfsample.common.dto.ShirtDTO;
 import com.wfsample.common.dto.ShirtStyleDTO;
 import com.wfsample.service.StylingApi;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
@@ -68,10 +58,12 @@ public class StylingService extends Application<DropwizardServiceConfig> {
       dto2.setImageUrl("style2Image");
       shirtStyleDTOS.add(dto);
       shirtStyleDTOS.add(dto2);
-      ManagedChannel printingChannel = ManagedChannelBuilder.forAddress("localhost",
-          configuration.getPrintingPort()).usePlaintext().build();
-      ManagedChannel packagingChannel = ManagedChannelBuilder.forAddress("localhost",
-          configuration.getPackagingPort()).usePlaintext().build();
+      ManagedChannel printingChannel = ManagedChannelBuilder.forAddress(
+          configuration.getPrintingHost(), configuration.getPrintingPort()).
+          usePlaintext().build();
+      ManagedChannel packagingChannel = ManagedChannelBuilder.forAddress(
+          configuration.getPackagingHost(), configuration.getPackagingPort()).
+          usePlaintext().build();
       printing = PrintingGrpc.newBlockingStub(printingChannel);
       packaging = PackagingGrpc.newBlockingStub(packagingChannel);
 

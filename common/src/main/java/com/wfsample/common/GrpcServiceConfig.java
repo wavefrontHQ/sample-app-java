@@ -2,8 +2,6 @@ package com.wfsample.common;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.annotation.Nonnull;
-
 /**
  * gRPC based service configuration.
  *
@@ -17,19 +15,7 @@ public class GrpcServiceConfig {
   @JsonProperty
   private int grpcPort = 0;
 
-  /**
-   * Metadata associated with a specific instance of a service.
-   */
-  @Nonnull
-  @JsonProperty
-  private MetadataConfig metadata = new MetadataConfig();
-
   public int getGrpcPort() {
     return grpcPort;
-  }
-
-  @Nonnull
-  public MetadataConfig getMetadata() {
-    return metadata;
   }
 }

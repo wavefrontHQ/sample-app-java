@@ -2,8 +2,6 @@ package com.wfsample.common;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.annotation.Nonnull;
-
 import io.dropwizard.Configuration;
 
 /**
@@ -32,11 +30,22 @@ public class DropwizardServiceConfig extends Configuration {
   private int packagingPort = 50053;
 
   /**
-   * Metadata associated with a specific instance of a service.
+   * Host on which the styling service is running.
    */
-  @Nonnull
   @JsonProperty
-  private MetadataConfig metadata = new MetadataConfig();
+  private String stylingHost = "stylingService";
+
+  /**
+   * Host on which the styling service is running.
+   */
+  @JsonProperty
+  private String printingHost = "printingService";
+
+  /**
+   * Host on which the styling service is running.
+   */
+  @JsonProperty
+  private String packagingHost = "packagingService";
 
   public int getStylingPort() {
     return stylingPort;
@@ -50,8 +59,15 @@ public class DropwizardServiceConfig extends Configuration {
     return packagingPort;
   }
 
-  @Nonnull
-  public MetadataConfig getMetadata() {
-    return metadata;
+  public String getStylingHost() {
+    return stylingHost;
+  }
+
+  public String getPrintingHost() {
+    return printingHost;
+  }
+
+  public String getPackagingHost() {
+    return packagingHost;
   }
 }

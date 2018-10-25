@@ -7,5 +7,4 @@ server:
     port: 50150
 
 stylingPort: 50051
-printingPort: 50052
-packagingPort: 50053
+stylingHost: "localhost"
