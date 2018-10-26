@@ -11,12 +11,13 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import java.util.List;
 import java.util.UUID;
 
 /**
- * Controller for delivery service which is responsible for dispatching shirts returning
- * tracking number for a given order.
+ * Controller for delivery service which is responsible for dispatching shirts returning tracking
+ * number for a given order.
  *
  * @author Hao Song (songhao@vmware.com).
  */
@@ -28,7 +29,7 @@ public class DeliveryController {
   @Path("{orderNum}")
   @Consumes(MediaType.APPLICATION_JSON)
   public Response dispatch(@PathParam("orderNum") String orderNum, List<ShirtDTO> shirts,
-                             @Context HttpHeaders httpHeaders) {
+                           @Context HttpHeaders httpHeaders) {
     if (shirts == null || shirts.size() == 0) {
       return Response.status(Response.Status.BAD_REQUEST).entity("No shirt to delivery").build();
     }
