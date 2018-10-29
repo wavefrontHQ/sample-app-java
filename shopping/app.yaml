@@ -7,4 +7,6 @@ server:
     port: 50150
 
 stylingPort: 50051
+deliveryPort: 50054
 stylingHost: "localhost"
+deliveryHost: "localhost"

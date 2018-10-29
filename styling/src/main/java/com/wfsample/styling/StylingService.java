@@ -1,6 +1,7 @@
 package com.wfsample.styling;
 
 import com.wfsample.beachshirts.PackagingGrpc;
+import com.wfsample.beachshirts.PackedShirts;
 import com.wfsample.beachshirts.PrintRequest;
 import com.wfsample.beachshirts.PrintingGrpc;
 import com.wfsample.beachshirts.Shirt;
@@ -8,6 +9,8 @@ import com.wfsample.beachshirts.ShirtStyle;
 import com.wfsample.beachshirts.WrapRequest;
 import com.wfsample.common.DropwizardServiceConfig;
 import com.wfsample.common.dto.OrderStatusDTO;
+import com.wfsample.common.dto.PackedShirtsDTO;
+import com.wfsample.common.dto.ShirtDTO;
 import com.wfsample.common.dto.ShirtStyleDTO;
 import com.wfsample.service.StylingApi;
 
@@ -19,6 +22,8 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Driver for styling service which manages different styles of shirts and takes orders for a shirts
@@ -73,12 +78,16 @@ public class StylingService extends Application<DropwizardServiceConfig> {
       return shirtStyleDTOS;
     }
 
-    public OrderStatusDTO makeShirts(String id, int quantity) {
+    public PackedShirtsDTO makeShirts(String id, int quantity) {
       Iterator<Shirt> shirts = printing.printShirts(PrintRequest.newBuilder().
           setStyleToPrint(ShirtStyle.newBuilder().setName(id).setImageUrl(id + "Image").build()).
           setQuantity(quantity).build());
-      packaging.wrapShirts(WrapRequest.newBuilder().addAllShirts(() -> shirts).build());
-      return new OrderStatusDTO("completed");
+      PackedShirts packedShirts = packaging.wrapShirts(WrapRequest.newBuilder().addAllShirts(() ->
+          shirts).build());
+      return new PackedShirtsDTO(packedShirts.getShirtsList().stream().
+          map(shirt -> new ShirtDTO(
+              new ShirtStyleDTO(shirt.getStyle().getName(), shirt.getStyle().getImageUrl()))).
+          collect(toList()));
     }
   }
 }

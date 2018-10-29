@@ -1,6 +1,6 @@
 package com.wfsample.service;
 
-import com.wfsample.common.dto.OrderStatusDTO;
+import com.wfsample.common.dto.PackedShirtsDTO;
 import com.wfsample.common.dto.ShirtStyleDTO;
 
 import java.util.List;
@@ -13,6 +13,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+/**
+ * API interface for beachshirt styling service.
+ *
+ * @author Srujan Narkedamalli (snarkedamall@wavefront.com).
+ */
 @Path("/style")
 @Produces(MediaType.APPLICATION_JSON)
 public interface StylingApi {
@@ -23,5 +28,5 @@ public interface StylingApi {
   @GET
   @Path("{id}/make")
   @Consumes(MediaType.APPLICATION_JSON)
-  OrderStatusDTO makeShirts(@PathParam("id") String id, @QueryParam("quantity") int quantity);
+  PackedShirtsDTO makeShirts(@PathParam("id") String id, @QueryParam("quantity") int quantity);
 }
