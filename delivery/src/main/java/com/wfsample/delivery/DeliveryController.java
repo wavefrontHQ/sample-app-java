@@ -9,8 +9,8 @@ import java.util.UUID;
 import javax.ws.rs.core.Response;
 
 /**
- * Controller for delivery service which is responsible for dispatching shirts returning
- * tracking number for a given order.
+ * Controller for delivery service which is responsible for dispatching shirts returning tracking
+ * number for a given order.
  *
  * @author Hao Song (songhao@vmware.com).
  */
