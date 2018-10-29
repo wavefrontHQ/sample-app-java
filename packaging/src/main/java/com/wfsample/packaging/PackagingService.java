@@ -8,6 +8,7 @@ import com.wfsample.common.GrpcServiceConfig;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
 /**
@@ -36,6 +37,10 @@ public class PackagingService {
 
     @Override
     public void wrapShirts(WrapRequest request, StreamObserver<PackedShirts> responseObserver) {
+      if (request.getShirtsCount() > 10) {
+        // can't pack more than 10 shirts at once.
+        responseObserver.onError(Status.INTERNAL.asRuntimeException());
+      }
       responseObserver.onNext(PackedShirts.newBuilder().
           addAllShirts(request.getShirtsList()).
           build());

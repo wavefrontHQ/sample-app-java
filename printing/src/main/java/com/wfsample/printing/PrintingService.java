@@ -8,6 +8,7 @@ import com.wfsample.common.GrpcServiceConfig;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
 /**
@@ -41,6 +42,10 @@ public class PrintingService {
 
     @Override
     public void printShirts(PrintRequest request, StreamObserver<Shirt> responseObserver) {
+      if (request.getQuantity() > 20) {
+        // not enough ink to print shirts
+        responseObserver.onError(Status.RESOURCE_EXHAUSTED.asRuntimeException());
+      }
       for (int i = 0; i < request.getQuantity(); i++) {
         responseObserver.onNext(Shirt.newBuilder().setStyle(request.getStyleToPrint()).build());
       }

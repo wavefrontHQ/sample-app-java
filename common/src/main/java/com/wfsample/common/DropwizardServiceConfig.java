@@ -30,6 +30,12 @@ public class DropwizardServiceConfig extends Configuration {
   private int packagingPort = 50053;
 
   /**
+   * Port on which delivery service is running.
+   */
+  @JsonProperty
+  private int deliveryPort = 50054;
+
+  /**
    * Host on which the styling service is running.
    */
   @JsonProperty
@@ -47,6 +53,12 @@ public class DropwizardServiceConfig extends Configuration {
   @JsonProperty
   private String packagingHost = "packagingService";
 
+  /**
+   * Host on which the delivery service is running.
+   */
+  @JsonProperty
+  private String deliveryHost = "deliveryService";
+
   public int getStylingPort() {
     return stylingPort;
   }
@@ -59,6 +71,10 @@ public class DropwizardServiceConfig extends Configuration {
     return packagingPort;
   }
 
+  public int getDeliveryPort() {
+    return deliveryPort;
+  }
+
   public String getStylingHost() {
     return stylingHost;
   }
@@ -69,5 +85,9 @@ public class DropwizardServiceConfig extends Configuration {
 
   public String getPackagingHost() {
     return packagingHost;
+  }
+
+  public String getDeliveryHost() {
+    return deliveryHost;
   }
 }

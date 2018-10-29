@@ -9,6 +9,14 @@ public class ShirtStyleDTO {
   String name;
   String imageUrl;
 
+  public ShirtStyleDTO() {
+  }
+
+  public ShirtStyleDTO(String name, String imageUrl) {
+    this.name = name;
+    this.imageUrl = imageUrl;
+  }
+
   public String getName() {
     return name;
   }
