@@ -10,6 +10,7 @@ java -jar ./shopping/target/shopping-0.9.0-SNAPSHOT.jar server ./shopping/app.ya
 java -jar ./styling/target/styling-0.9.0-SNAPSHOT.jar server ./styling/app.yaml
 java -jar ./printing/target/printing-0.9.0-SNAPSHOT.jar ./printing/app.yaml
 java -jar ./packaging/target/packaging-0.9.0-SNAPSHOT.jar ./packaging/app.yaml
+java -jar ./delivery/target/delivery-0.9.0-SNAPSHOT.jar
 ```
 - Now view the shopping menus using HTTP GET request: `http://localhost:50050/shop/menu`
 - Order shirts using HTTP POST request: 
