@@ -8,7 +8,6 @@ import com.wfsample.beachshirts.Shirt;
 import com.wfsample.beachshirts.ShirtStyle;
 import com.wfsample.beachshirts.WrapRequest;
 import com.wfsample.common.DropwizardServiceConfig;
-import com.wfsample.common.dto.OrderStatusDTO;
 import com.wfsample.common.dto.PackedShirtsDTO;
 import com.wfsample.common.dto.ShirtDTO;
 import com.wfsample.common.dto.ShirtStyleDTO;
@@ -49,10 +48,10 @@ public class StylingService extends Application<DropwizardServiceConfig> {
   }
 
   public class StylingWebResource implements StylingApi {
-    // sample set of static styles.
-    private List<ShirtStyleDTO> shirtStyleDTOS = new ArrayList<>();
     private final PrintingGrpc.PrintingBlockingStub printing;
     private final PackagingGrpc.PackagingBlockingStub packaging;
+    // sample set of static styles.
+    private List<ShirtStyleDTO> shirtStyleDTOS = new ArrayList<>();
 
     public StylingWebResource() {
       ShirtStyleDTO dto = new ShirtStyleDTO();
