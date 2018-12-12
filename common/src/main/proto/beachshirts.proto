@@ -6,10 +6,16 @@ option java_outer_classname = "BeachShirts";
 
 service Printing {
     rpc printShirts (PrintRequest) returns (stream Shirt) {}
+    rpc addPrintColor(Color) returns (Status) {}
+    rpc restockColor(Color) returns (Status) {}
+    rpc getAvailableColors(Void) returns (AvailableColors) {}
 }
 
 service Packaging {
     rpc wrapShirts (WrapRequest) returns (PackedShirts) {}
+    rpc giftWrap (WrapRequest) returns (GiftPack) {}
+    rpc restockMaterial(WrappingType) returns (Status) {}
+    rpc getPackingTypes(Void) returns (WrappingTypes) {}
 }
 
 message ShirtStyle {
@@ -36,4 +42,31 @@ message PrintResponse{
 
 message WrapRequest {
     repeated Shirt shirts = 1;
+}
+
+message GiftPack {
+    bytes giftMaterial = 1;
+}
+
+message Color {
+    string color = 1;
+}
+
+message Status {
+    bool status = 1;
+}
+
+message AvailableColors {
+    repeated Color colors = 1;
+}
+
+message Void {
+}
+
+message WrappingType {
+    string wrappingType = 1;
+}
+
+message WrappingTypes {
+    repeated WrappingType wrappingType = 1;
 }
