@@ -1,15 +1,16 @@
 package com.wfsample.styling;
 
+import com.wfsample.beachshirts.Color;
 import com.wfsample.beachshirts.PackagingGrpc;
-import com.wfsample.beachshirts.PackedShirts;
 import com.wfsample.beachshirts.PrintRequest;
 import com.wfsample.beachshirts.PrintingGrpc;
 import com.wfsample.beachshirts.Shirt;
 import com.wfsample.beachshirts.ShirtStyle;
+import com.wfsample.beachshirts.Void;
 import com.wfsample.beachshirts.WrapRequest;
+import com.wfsample.beachshirts.WrappingType;
 import com.wfsample.common.DropwizardServiceConfig;
 import com.wfsample.common.dto.PackedShirtsDTO;
-import com.wfsample.common.dto.ShirtDTO;
 import com.wfsample.common.dto.ShirtStyleDTO;
 import com.wfsample.service.StylingApi;
 
@@ -17,12 +18,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * Driver for styling service which manages different styles of shirts and takes orders for a shirts
@@ -74,19 +75,62 @@ public class StylingService extends Application<DropwizardServiceConfig> {
     }
 
     public List<ShirtStyleDTO> getAllStyles() {
-      return shirtStyleDTOS;
+      try {
+        Thread.sleep(10);
+        printing.getAvailableColors(Void.getDefaultInstance());
+        Thread.sleep(10);
+        packaging.getPackingTypes(Void.getDefaultInstance());
+        Thread.sleep(10);
+        return shirtStyleDTOS;
+      } catch (Exception e) {
+        throw new RuntimeException(e);
+      }
     }
 
     public PackedShirtsDTO makeShirts(String id, int quantity) {
-      Iterator<Shirt> shirts = printing.printShirts(PrintRequest.newBuilder().
-          setStyleToPrint(ShirtStyle.newBuilder().setName(id).setImageUrl(id + "Image").build()).
-          setQuantity(quantity).build());
-      PackedShirts packedShirts = packaging.wrapShirts(WrapRequest.newBuilder().addAllShirts(() ->
-          shirts).build());
-      return new PackedShirtsDTO(packedShirts.getShirtsList().stream().
-          map(shirt -> new ShirtDTO(
-              new ShirtStyleDTO(shirt.getStyle().getName(), shirt.getStyle().getImageUrl()))).
-          collect(toList()));
+      try {
+        Thread.sleep(20);
+        Iterator<Shirt> shirts = printing.printShirts(PrintRequest.newBuilder().
+            setStyleToPrint(ShirtStyle.newBuilder().setName(id).setImageUrl(id + "Image").build()).
+            setQuantity(quantity).build());
+        Thread.sleep(20);
+        if (quantity < 30) {
+          packaging.wrapShirts(WrapRequest.newBuilder().addAllShirts(() ->
+              shirts).build());
+        } else {
+          packaging.giftWrap(WrapRequest.newBuilder().addAllShirts(() ->
+              shirts).build());
+        }
+        Thread.sleep(20);
+        return new PackedShirtsDTO(new ArrayList<>());
+      } catch (Exception e) {
+        throw new RuntimeException(e);
+      }
+    }
+
+    @Override
+    public Response addStyle(String id) {
+      try {
+        Thread.sleep(10);
+        printing.addPrintColor(Color.newBuilder().setColor("rgb").build());
+        Thread.sleep(10);
+        return Response.ok().build();
+      } catch (Exception e) {
+        throw new RuntimeException(e);
+      }
+    }
+
+    @Override
+    public Response restockStyle(String id) {
+      try {
+        Thread.sleep(10);
+        printing.restockColor(Color.newBuilder().setColor("rgb").build());
+        Thread.sleep(10);
+        packaging.restockMaterial(WrappingType.newBuilder().setWrappingType("wrap").build());
+        return Response.ok().build();
+      } catch (Exception e) {
+        throw new RuntimeException(e);
+      }
     }
   }
 }

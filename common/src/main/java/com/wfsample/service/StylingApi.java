@@ -7,11 +7,13 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * API interface for beachshirt styling service.
@@ -29,4 +31,12 @@ public interface StylingApi {
   @Path("{id}/make")
   @Consumes(MediaType.APPLICATION_JSON)
   PackedShirtsDTO makeShirts(@PathParam("id") String id, @QueryParam("quantity") int quantity);
+
+  @POST
+  @Path("{id}/add")
+  Response addStyle(@PathParam("id") String id);
+
+  @POST
+  @Path("{id}/update")
+  Response restockStyle(@PathParam("id") String id);
 }

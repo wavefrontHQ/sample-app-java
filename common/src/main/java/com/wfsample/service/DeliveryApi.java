@@ -3,6 +3,7 @@ package com.wfsample.service;
 import com.wfsample.common.dto.PackedShirtsDTO;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -23,4 +24,12 @@ public interface DeliveryApi {
   @Path("{orderNum}")
   @Consumes(MediaType.APPLICATION_JSON)
   Response dispatch(@PathParam("orderNum") String orderNum, PackedShirtsDTO shirts);
+
+  @GET
+  @Path("track/{orderNum}")
+  Response trackOrder(@PathParam("orderNum") String orderNum);
+
+  @POST
+  @Path("cancel/{orderNum}")
+  Response cancelOrder(@PathParam("orderNum") String orderNum);
 }
