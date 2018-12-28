@@ -1,5 +1,6 @@
 package com.wfsample.shopping;
 
+import com.wavefront.sdk.jersey.WavefrontJerseyFactory;
 import com.wfsample.common.BeachShirtsUtils;
 import com.wfsample.common.DropwizardServiceConfig;
 import com.wfsample.common.dto.DeliveryStatusDTO;
@@ -51,9 +52,14 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
         .getStylingPort();
     String deliveryUrl = "http://" + configuration.getDeliveryHost() + ":" +
         configuration.getDeliveryPort();
+    WavefrontJerseyFactory factory = new WavefrontJerseyFactory(
+        configuration.getApplicationTagsYamlFile(), configuration.getWfReportingConfigYamlFile());
+    environment.jersey().register(factory.getWavefrontJerseyFilter());
     environment.jersey().register(new ShoppingWebResource(
-        BeachShirtsUtils.createProxyClient(stylingUrl, StylingApi.class),
-        BeachShirtsUtils.createProxyClient(deliveryUrl, DeliveryApi.class)));
+        BeachShirtsUtils.createProxyClient(stylingUrl, StylingApi.class,
+            factory.getWavefrontJaxrsClientFilter()),
+        BeachShirtsUtils.createProxyClient(deliveryUrl, DeliveryApi.class,
+            factory.getWavefrontJaxrsClientFilter())));
   }
 
   @Path("/shop")

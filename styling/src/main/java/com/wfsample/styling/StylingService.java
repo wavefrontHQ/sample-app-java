@@ -1,5 +1,8 @@
 package com.wfsample.styling;
 
+import com.wavefront.sdk.grpc.WavefrontClientInterceptor;
+import com.wavefront.sdk.grpc.reporter.WavefrontGrpcReporter;
+import com.wavefront.sdk.jersey.WavefrontJerseyFactory;
 import com.wfsample.beachshirts.Color;
 import com.wfsample.beachshirts.PackagingGrpc;
 import com.wfsample.beachshirts.PrintRequest;
@@ -45,7 +48,19 @@ public class StylingService extends Application<DropwizardServiceConfig> {
   public void run(DropwizardServiceConfig configuration, Environment environment)
       throws Exception {
     this.configuration = configuration;
-    environment.jersey().register(new StylingWebResource());
+    WavefrontJerseyFactory factory = new WavefrontJerseyFactory(
+        configuration.getApplicationTagsYamlFile(), configuration.getWfReportingConfigYamlFile());
+    WavefrontGrpcReporter grpcReporter = new WavefrontGrpcReporter.Builder(
+        factory.getApplicationTags()).
+        withSource(factory.getSource()).
+        reportingIntervalSeconds(30).
+        build(factory.getWavefrontSender());
+    grpcReporter.start();
+    WavefrontClientInterceptor interceptor =
+        new WavefrontClientInterceptor.Builder(grpcReporter, factory.getApplicationTags()).
+            withTracer(factory.getTracer()).recordStreamingStats().build();
+    environment.jersey().register(factory.getWavefrontJerseyFilter());
+    environment.jersey().register(new StylingWebResource(interceptor));
   }
 
   public class StylingWebResource implements StylingApi {
@@ -54,7 +69,7 @@ public class StylingService extends Application<DropwizardServiceConfig> {
     // sample set of static styles.
     private List<ShirtStyleDTO> shirtStyleDTOS = new ArrayList<>();
 
-    public StylingWebResource() {
+    public StylingWebResource(WavefrontClientInterceptor clientInterceptor) {
       ShirtStyleDTO dto = new ShirtStyleDTO();
       dto.setName("style1");
       dto.setImageUrl("style1Image");
@@ -65,9 +80,11 @@ public class StylingService extends Application<DropwizardServiceConfig> {
       shirtStyleDTOS.add(dto2);
       ManagedChannel printingChannel = ManagedChannelBuilder.forAddress(
           configuration.getPrintingHost(), configuration.getPrintingPort()).
+          intercept(clientInterceptor).
           usePlaintext().build();
       ManagedChannel packagingChannel = ManagedChannelBuilder.forAddress(
           configuration.getPackagingHost(), configuration.getPackagingPort()).
+          intercept(clientInterceptor).
           usePlaintext().build();
       printing = PrintingGrpc.newBlockingStub(printingChannel);
       packaging = PackagingGrpc.newBlockingStub(packagingChannel);

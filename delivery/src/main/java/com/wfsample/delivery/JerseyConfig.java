@@ -1,6 +1,9 @@
 package com.wfsample.delivery;
 
+import com.wavefront.sdk.jersey.WavefrontJerseyFactory;
+
 import org.glassfish.jersey.server.ResourceConfig;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -16,7 +19,8 @@ import javax.ws.rs.ApplicationPath;
 public class JerseyConfig extends ResourceConfig {
 
   @Inject
-  public JerseyConfig() {
+  public JerseyConfig(WavefrontJerseyFactory wavefrontJerseyFactory) {
+    register(wavefrontJerseyFactory.getWavefrontJerseyFilter());
     register(new DeliveryController());
   }
 
