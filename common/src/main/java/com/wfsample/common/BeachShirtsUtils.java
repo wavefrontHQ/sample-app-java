@@ -3,6 +3,7 @@ package com.wfsample.common;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLParser;
+import com.wavefront.sdk.jaxrs.client.WavefrontJaxrsClientFilter;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -26,14 +27,15 @@ public final class BeachShirtsUtils {
   private BeachShirtsUtils() {
   }
 
-  public static <T> T createProxyClient(String url, Class<T> clazz) {
+  public static <T> T createProxyClient(String url, Class<T> clazz,
+                                        WavefrontJaxrsClientFilter filter) {
     HttpClient httpClient = HttpClientBuilder.create().setMaxConnTotal(2000).
         setMaxConnPerRoute(1000).build();
     ApacheHttpClient4Engine apacheHttpClient4Engine = new ApacheHttpClient4Engine(httpClient, true);
     ResteasyProviderFactory factory = ResteasyProviderFactory.getInstance();
     factory.registerProvider(ResteasyJackson2Provider.class);
     ResteasyClient resteasyClient = new ResteasyClientBuilder().
-        httpEngine(apacheHttpClient4Engine).providerFactory(factory).build();
+        httpEngine(apacheHttpClient4Engine).providerFactory(factory).register(filter).build();
     ResteasyWebTarget target = resteasyClient.target(url);
     return target.proxy(clazz);
   }

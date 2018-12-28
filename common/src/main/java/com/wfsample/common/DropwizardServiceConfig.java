@@ -59,6 +59,18 @@ public class DropwizardServiceConfig extends Configuration {
   @JsonProperty
   private String deliveryHost = "deliveryService";
 
+  /**
+   * Path to the Application tags yaml file.
+   */
+  @JsonProperty
+  private String applicationTagsYamlFile;
+
+  /**
+   * Path to the wavefront reporting config yaml file.
+   */
+  @JsonProperty
+  private String wfReportingConfigYamlFile;
+
   public int getStylingPort() {
     return stylingPort;
   }
@@ -89,5 +101,13 @@ public class DropwizardServiceConfig extends Configuration {
 
   public String getDeliveryHost() {
     return deliveryHost;
+  }
+
+  public String getApplicationTagsYamlFile() {
+    return applicationTagsYamlFile;
+  }
+
+  public String getWfReportingConfigYamlFile() {
+    return wfReportingConfigYamlFile;
   }
 }

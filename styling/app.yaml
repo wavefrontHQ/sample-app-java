@@ -11,3 +11,7 @@ packagingPort: 50053
 
 printingHost: "localhost"
 packagingHost: "localhost"
+
+
+applicationTagsYamlFile: "./styling/applicationTags.yaml"
+wfReportingConfigYamlFile: "./wfReportingConfig.yaml"

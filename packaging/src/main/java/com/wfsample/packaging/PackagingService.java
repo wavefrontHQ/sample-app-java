@@ -2,6 +2,15 @@ package com.wfsample.packaging;
 
 import com.google.protobuf.ByteString;
 
+import com.wavefront.config.ReportingUtils;
+import com.wavefront.config.WavefrontReportingConfig;
+import com.wavefront.opentracing.WavefrontTracer;
+import com.wavefront.opentracing.reporting.WavefrontSpanReporter;
+import com.wavefront.sdk.appagent.jvm.reporter.WavefrontJvmReporter;
+import com.wavefront.sdk.common.WavefrontSender;
+import com.wavefront.sdk.common.application.ApplicationTags;
+import com.wavefront.sdk.grpc.WavefrontServerTracerFactory;
+import com.wavefront.sdk.grpc.reporter.WavefrontGrpcReporter;
 import com.wfsample.beachshirts.GiftPack;
 import com.wfsample.beachshirts.PackagingGrpc;
 import com.wfsample.beachshirts.PackedShirts;
@@ -11,6 +20,8 @@ import com.wfsample.beachshirts.WrappingType;
 import com.wfsample.beachshirts.WrappingTypes;
 import com.wfsample.common.BeachShirtsUtils;
 import com.wfsample.common.GrpcServiceConfig;
+
+import org.apache.commons.lang3.BooleanUtils;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -28,8 +39,30 @@ import io.grpc.stub.StreamObserver;
 public class PackagingService {
 
   public PackagingService(GrpcServiceConfig config) throws Exception {
+    ApplicationTags applicationTags = ReportingUtils.constructApplicationTags
+        (config.getApplicationTagsYamlFile());
+    WavefrontReportingConfig wfReportingConfig = ReportingUtils.constructWavefrontReportingConfig(
+        config.getWfReportingConfigYamlFile());
+    String source = wfReportingConfig.getSource();
+    WavefrontSender wavefrontSender = ReportingUtils.constructWavefrontSender(wfReportingConfig);
+    WavefrontTracer tracer;
+    if (BooleanUtils.isTrue(wfReportingConfig.getReportTraces())) {
+      WavefrontSpanReporter wfSpanReporter = new WavefrontSpanReporter.Builder().withSource(source).build(wavefrontSender);
+      tracer = (new com.wavefront.opentracing.WavefrontTracer.Builder(wfSpanReporter, applicationTags)).build();
+    } else {
+      tracer = null;
+    }
+    WavefrontJvmReporter wfJvmReporter = new WavefrontJvmReporter.Builder(applicationTags).
+        withSource(source).build(wavefrontSender);
+    wfJvmReporter.start();
+    WavefrontGrpcReporter grpcReporter = new WavefrontGrpcReporter.Builder(
+        applicationTags).withSource(source).reportingIntervalSeconds(30).build(wavefrontSender);
+    grpcReporter.start();
+    WavefrontServerTracerFactory tracerFactory =
+        new WavefrontServerTracerFactory.Builder(grpcReporter, applicationTags).
+            withTracer(tracer).recordStreamingStats().build();
     ServerBuilder builder = ServerBuilder.forPort(config.getGrpcPort()).
-        addService(new PackagingImpl());
+        addService(new PackagingImpl()).addStreamTracerFactory(tracerFactory);
     Server packaging = builder.build();
     System.out.println("Starting Packaging server ...");
     packaging.start();

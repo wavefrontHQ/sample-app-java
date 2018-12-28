@@ -121,6 +121,16 @@
             <artifactId>jackson-module-afterburner</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.wavefront</groupId>
+            <artifactId>wavefront-jersey-sdk-java</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wavefront</groupId>
+            <artifactId>wavefront-grpc-sdk-java</artifactId>
+            <version>0.9.0</version>
+        </dependency>
     </dependencies>
 
     <build>
