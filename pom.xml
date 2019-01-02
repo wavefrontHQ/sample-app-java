@@ -131,6 +131,12 @@
             <artifactId>wavefront-grpc-sdk-java</artifactId>
             <version>0.9.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.wavefront</groupId>
+            <artifactId>wavefront-dropwizard-sdk-java</artifactId>
+            <!-- TODO: change version to 0.9.0 -->
+            <version>0.9.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
