@@ -134,8 +134,7 @@
         <dependency>
             <groupId>com.wavefront</groupId>
             <artifactId>wavefront-dropwizard-sdk-java</artifactId>
-            <!-- TODO: change version to 0.9.0 -->
-            <version>0.9.0-SNAPSHOT</version>
+            <version>0.9.0</version>
         </dependency>
     </dependencies>
 
