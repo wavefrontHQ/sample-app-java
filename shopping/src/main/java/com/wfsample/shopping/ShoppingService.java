@@ -1,6 +1,5 @@
 package com.wfsample.shopping;
 
-import com.wavefront.sdk.dropwizard.reporter.WavefrontDropwizardReporter;
 import com.wavefront.sdk.jersey.WavefrontJerseyFactory;
 import com.wfsample.common.BeachShirtsUtils;
 import com.wfsample.common.DropwizardServiceConfig;
@@ -55,12 +54,6 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
         configuration.getDeliveryPort();
     WavefrontJerseyFactory factory = new WavefrontJerseyFactory(
         configuration.getApplicationTagsYamlFile(), configuration.getWfReportingConfigYamlFile());
-    WavefrontDropwizardReporter dropwizardReporter = new WavefrontDropwizardReporter.Builder(
-        environment.metrics(), factory.getApplicationTags()).
-        withSource(factory.getSource()).
-        reportingIntervalSeconds(30).
-        build(factory.getWavefrontSender());
-    dropwizardReporter.start();
     environment.jersey().register(factory.getWavefrontJerseyFilter());
     environment.jersey().register(new ShoppingWebResource(
         BeachShirtsUtils.createProxyClient(stylingUrl, StylingApi.class,
