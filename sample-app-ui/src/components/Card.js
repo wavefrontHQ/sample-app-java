@@ -32,7 +32,7 @@ class Card extends PureComponent {
     render() {
         const { item } = this.props;
         return (
-            <div className="card clr-col-2">
+            <div className="card clr-col-6 clr-col-sm-6 clr-col-md-4 clr-col-lg-3 clr-col-xl-2">
                 <div className="card-header">
                     {item.name}
                 </div>
