@@ -47,10 +47,6 @@ class Card extends PureComponent {
                     header: data.status === 200 ? "SUCCESS" : "FAILURE (try again)",
                     description: `${duration}`,
                 }
-            }, () => {
-                setTimeout(() => {
-                    this.setState({alert: null},)
-                }, 2000)
             });
         })
     }
