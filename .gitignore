@@ -1,6 +1,6 @@
 .idea
 target/
-sample-app-ui/node_modules/
+shopping/src/ui/node_modules/
 *.iml
 *~
 
