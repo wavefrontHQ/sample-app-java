@@ -44,8 +44,7 @@ class Card extends PureComponent {
                 isLoading: false,
                 alert: {
                     type: data.status === 200 ? messageTypes.SUCCESS : messageTypes.FAILURE,
-                    header: data.status === 200 ? "SUCCESS" : "FAILURE (try again)",
-                    description: `${duration}`,
+                    header: data.status === 200 ? `Order succeeded after ${duration}` : `Order filed after ${duration} try again`,
                 }
             });
         })
@@ -96,7 +95,7 @@ class Card extends PureComponent {
                                         <div className="alert-icon-wrapper">
                                             <clr-icon className="alert-icon" shape="check-circle"/>
                                         </div>
-                                        <div className="alert-text">{`${alert.header} ${alert.description}`}</div>
+                                        <div className="alert-text">{`${alert.header}`}</div>
                                         <button type="button" className="close btn-sm" aria-label="Close" onClick={this.closeAlert}>
                                             <clr-icon aria-hidden="true" shape="close"/>
                                         </button>
