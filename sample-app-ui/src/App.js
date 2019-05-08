@@ -1,6 +1,4 @@
-import React from 'react';
-import "@clr/ui/clr-ui-dark.min.css";
-import './App.css';
+import React, { PureComponent } from 'react';
 import image1 from './images/2018-bo-ops-shirt.png';
 import image2 from './images/2018-bo-vans-closeup.png';
 import image3 from './images/2018-bo-vans-shirt.png';
@@ -13,7 +11,12 @@ import image9 from './images/2019-bo-splash-shirt.jpg';
 import image10 from './images/2019-bo-team-closeup.png';
 import image11 from './images/2019-bo-team-shirt.png';
 import image12 from './images/gothoiatstf1_1_1200x1200.jpg';
-import Card from "./components/Card";
+import Card from "./components/Card/Card";
+
+import "@clr/ui/clr-ui-dark.min.css";
+import "@clr/icons";
+import "@clr/icons/clr-icons.min.css";
+import './App.css';
 
 const applications = [
     {
@@ -66,19 +69,21 @@ const applications = [
     }
 ]
 
-function App() {
-  return (
-    <div className="application">
-        <div className="application-header">
-            <h1>Beachshirts Application</h1>
-        </div>
-        <div className="clr-row applications">
-            {
-                applications.map((item) => <Card item={item} key={item.name}/>)
-            }
-        </div>
-    </div>
-  );
+class App extends PureComponent {
+    render() {
+        return (
+            <div className="application">
+                <div className="application-header">
+                    <h1>Beachshirts Application</h1>
+                </div>
+                <div className="clr-row applications">
+                    {
+                        applications.map((item) => <Card item={item} key={item.name} />)
+                    }
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;

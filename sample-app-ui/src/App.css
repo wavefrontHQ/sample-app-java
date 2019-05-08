@@ -1,6 +1,7 @@
 .application {
   text-align: center;
   background-color: #1b2a32;
+  padding-top: 24px;
 }
 
 .application-header h1 {
