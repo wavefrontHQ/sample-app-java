@@ -44,7 +44,7 @@ class Card extends PureComponent {
                 isLoading: false,
                 alert: {
                     type: data.status === 200 ? messageTypes.SUCCESS : messageTypes.FAILURE,
-                    header: data.status === 200 ? `Order succeeded after ${duration}` : `Order filed after ${duration} try again`,
+                    header: data.status === 200 ? `Order succeeded after ${duration}` : `Order failed after ${duration}. try again!`,
                 }
             });
         })
