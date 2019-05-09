@@ -12,9 +12,9 @@ java -jar ./printing/target/printing-0.9.0-SNAPSHOT.jar ./printing/app.yaml
 java -jar ./packaging/target/packaging-0.9.0-SNAPSHOT.jar ./packaging/app.yaml
 java -jar ./delivery/target/delivery-0.9.0-SNAPSHOT.jar  --spring.config.location=./delivery/src/main/resources/application.yml 
 ```
-- Now view the shopping menus using HTTP GET request: `http://localhost:50050/shop/menu`
+- Now view the shopping menus using HTTP GET request: `http://localhost:50050/api/shop/menu`
 - Order shirts using HTTP POST request: 
 ```
-http://localhost:50050/shop/order
+http://localhost:50050/api/shop/order
 Payload: {"styleName" : "testStyle1","quantity" : 5}
 ```
