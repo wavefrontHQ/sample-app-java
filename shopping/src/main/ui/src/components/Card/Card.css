@@ -56,3 +56,7 @@
     line-height: 31px;
     height: 36px;
 }
+
+.card-footer .clr-select {
+    padding: 0;
+}
