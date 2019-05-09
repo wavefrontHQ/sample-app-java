@@ -25,6 +25,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -43,6 +45,11 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
 
   public static void main(String[] args) throws Exception {
     new ShoppingService().run(args);
+  }
+
+  @Override
+  public void initialize(Bootstrap<DropwizardServiceConfig> bootstrap) {
+    bootstrap.addBundle(new AssetsBundle("/assets/", "/", "index.html"));
   }
 
   @Override
