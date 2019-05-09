@@ -20,7 +20,7 @@ export const makeRequest = (url, method, body) => {
 }
 
 export const orderShirts = (name, quantity) => {
-    return makeRequest(`${shopUrl}/shop/order`, "POST", {
+    return makeRequest(`${shopUrl}/api/shop/order`, "POST", {
         styleName: name,
         quantity,
     });
