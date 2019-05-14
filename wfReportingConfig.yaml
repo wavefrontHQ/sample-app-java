@@ -2,3 +2,11 @@ reportingMechanism: direct
 server: replace-with-wavefront-server-url
 token: replace-with-wavefront-token
 reportTraces: true
+
+# Template of Reporting via Wavefront Proxy
+# reportingMechanism: proxy
+# proxyHost: replace-with-wavefront-proxy-host
+# proxyMetricsPort: 2878
+# proxyDistributionsPort: 2878
+# proxyTracingPort: 30000
+# reportTraces: true
