@@ -1,0 +1,14 @@
+.application {
+  text-align: center;
+  background-color: #1b2a32;
+  padding-top: 24px;
+}
+
+.application-header h1 {
+  margin-top: 0;
+}
+
+.applications {
+  justify-content: center;
+  max-width: 100%;
+}

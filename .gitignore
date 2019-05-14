@@ -1,5 +1,6 @@
 .idea
 target/
+shopping/src/main/ui/node_modules/
 *.iml
 *~
 
