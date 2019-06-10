@@ -11,6 +11,7 @@ import com.wfsample.common.dto.PackedShirtsDTO;
 import com.wfsample.service.DeliveryApi;
 import com.wfsample.service.StylingApi;
 
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -39,6 +40,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
  */
 public class ShoppingService extends Application<DropwizardServiceConfig> {
   private DropwizardServiceConfig configuration;
+  private final Random rand = new Random(System.currentTimeMillis());
 
   private ShoppingService() {
   }
@@ -92,7 +94,7 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
     @Path("/menu")
     public Response getShoppingMenu(@Context HttpHeaders httpHeaders) {
       try {
-        Thread.sleep(20);
+        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -104,7 +106,7 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
     @Consumes(APPLICATION_JSON)
     public Response orderShirts(OrderDTO orderDTO, @Context HttpHeaders httpHeaders) {
       try {
-        Thread.sleep(30);
+        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -121,7 +123,7 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
     @Path("/status/{orderNum}")
     public Response getOrderStatus() {
       try {
-        Thread.sleep(30);
+        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -133,7 +135,7 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
     @Consumes(APPLICATION_JSON)
     public Response cancelShirtsOrder() {
       try {
-        Thread.sleep(50);
+        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -145,7 +147,7 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
     @Consumes(APPLICATION_JSON)
     public Response updateInventory() {
       try {
-        Thread.sleep(40);
+        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

@@ -4,6 +4,7 @@ import com.wfsample.common.dto.DeliveryStatusDTO;
 import com.wfsample.common.dto.PackedShirtsDTO;
 import com.wfsample.service.DeliveryApi;
 
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -19,6 +20,7 @@ public class DeliveryController implements DeliveryApi {
   AtomicInteger tracking = new AtomicInteger(0);
   AtomicInteger dispatch = new AtomicInteger(0);
   AtomicInteger cancel = new AtomicInteger(0);
+  private final Random rand = new Random(System.currentTimeMillis());
 
   @Override
   public Response dispatch(String orderNum, PackedShirtsDTO packedShirts) {
@@ -27,7 +29,7 @@ public class DeliveryController implements DeliveryApi {
           new DeliveryStatusDTO(null, "no shirts to deliver")).build();
     }
     try {
-      Thread.sleep(90);
+      Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
@@ -42,7 +44,7 @@ public class DeliveryController implements DeliveryApi {
       return Response.status(Response.Status.BAD_REQUEST).build();
     }
     try {
-      Thread.sleep(30);
+      Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
@@ -52,7 +54,7 @@ public class DeliveryController implements DeliveryApi {
   @Override
   public Response cancelOrder(String orderNum) {
     try {
-      Thread.sleep(45);
+      Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
     } catch (InterruptedException e) {
       e.printStackTrace();
     }

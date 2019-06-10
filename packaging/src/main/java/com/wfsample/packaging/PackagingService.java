@@ -80,12 +80,12 @@ public class PackagingService {
     private final AtomicInteger restock = new AtomicInteger(0);
     private final AtomicInteger wrap = new AtomicInteger(0);
     private final AtomicInteger giftWrap = new AtomicInteger(0);
-    private final Random random = new Random();
+    private final Random rand = new Random(System.currentTimeMillis());
 
     @Override
     public void wrapShirts(WrapRequest request, StreamObserver<PackedShirts> responseObserver) {
       try {
-        Thread.sleep(55);
+        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -105,15 +105,15 @@ public class PackagingService {
         responseObserver.onError(Status.INTERNAL.asRuntimeException());
       }
       try {
-        Thread.sleep(70);
+        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
       if (request.getShirtsCount() > 40) {
-        int resp = (int) Math.round(random.nextDouble() *
+        int resp = (int) Math.round(rand.nextDouble() *
             100.0) + 10000;
         try {
-          Thread.sleep(1400);
+          Thread.sleep((long) (rand.nextGaussian() * 200 + 1400));
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
@@ -121,7 +121,7 @@ public class PackagingService {
         responseObserver.onNext(GiftPack.newBuilder().setGiftMaterial(byteString).build());
         responseObserver.onCompleted();
       } else {
-        int resp = (int) Math.round(random.nextDouble() * 100.0);
+        int resp = (int) Math.round(rand.nextDouble() * 100.0);
         ByteString byteString = ByteString.copyFrom(new byte[resp]);
         responseObserver.onNext(GiftPack.newBuilder().setGiftMaterial(byteString).build());
         responseObserver.onCompleted();
@@ -132,7 +132,7 @@ public class PackagingService {
     public void restockMaterial(WrappingType request,
                                 StreamObserver<com.wfsample.beachshirts.Status> responseObserver) {
       try {
-        Thread.sleep(40);
+        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -148,7 +148,7 @@ public class PackagingService {
     @Override
     public void getPackingTypes(Void request, StreamObserver<WrappingTypes> responseObserver) {
       try {
-        Thread.sleep(60);
+        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
