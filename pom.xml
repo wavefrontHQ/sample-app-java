@@ -124,12 +124,12 @@
         <dependency>
             <groupId>com.wavefront</groupId>
             <artifactId>wavefront-jersey-sdk-java</artifactId>
-            <version>0.9.6</version>
+            <version>0.9.7</version>
         </dependency>
         <dependency>
             <groupId>com.wavefront</groupId>
             <artifactId>wavefront-grpc-sdk-java</artifactId>
-            <version>0.9.4</version>
+            <version>0.9.6</version>
         </dependency>
         <dependency>
             <groupId>com.wavefront</groupId>
