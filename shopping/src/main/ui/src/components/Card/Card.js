@@ -33,20 +33,31 @@ class Card extends PureComponent {
 
     handleChange = () => this.setState({value: this.selectRef.current.value});
 
+    handleOrderFailure = (start) => {
+        const end = Date.now();
+        const duration = ((end - start) >= 1000) ? `${(end - start)/1000}s` : `${(end - start)}ms`;
+        this.setState({
+            isLoading: false,
+            alert: {
+                type: messageTypes.FAILURE,
+                header: `Order failed after ${duration}. try again!`,
+            }
+        });
+    };
+    
     handleOrder = () => {
         this.setState({isLoading: true, alert: null});
         const start = Date.now();
         orderShirts(this.props.item.name, this.state.value)
         .then((data) => {
-            const end = Date.now();
-            const duration = ((end - start) >= 1000) ? `${(end - start)/1000}s` : `${(end - start)}ms`;
-            this.setState({
-                isLoading: false,
-                alert: {
-                    type: data.status === 200 ? messageTypes.SUCCESS : messageTypes.FAILURE,
-                    header: data.status === 200 ? `Order succeeded after ${duration}` : `Order failed after ${duration}. try again!`,
-                }
-            });
+            const isSuccess = data.status === 200;
+            if (isSuccess) {
+                this.props.handleOrderSuccess(this.props.item);
+            } else {
+                this.handleOrderFailure(start);
+            }
+        }, () => {
+            this.handleOrderFailure(start);
         })
     }
 

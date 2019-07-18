@@ -1,16 +1,6 @@
 import React, { PureComponent } from 'react';
-import image1 from './images/2018-bo-ops-shirt.png';
-import image2 from './images/2018-bo-vans-closeup.png';
-import image3 from './images/2018-bo-vans-shirt.png';
-import image4 from './images/2019-bo-blueops-shirt.png';
-import image5 from './images/2019-bo-brownops-shirt.png';
-import image6 from './images/2019-bo-brownops-closeup.png';
-import image7 from './images/2019-bo-meetup-closeup.png';
-import image8 from './images/2019-bo-meetup-shirt.png';
-import image9 from './images/2019-bo-splash-shirt.jpg';
-import image10 from './images/2019-bo-team-closeup.png';
-import image11 from './images/2019-bo-team-shirt.png';
-import image12 from './images/gothoiatstf1_1_1200x1200.jpg';
+import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
+import { applications } from "./constants";
 import Card from "./components/Card/Card";
 
 import "@clr/ui/clr-ui-dark.min.css";
@@ -18,58 +8,12 @@ import "@clr/icons";
 import "@clr/icons/clr-icons.min.css";
 import './App.css';
 
-const applications = [
-    {
-        name: "Amazing Shirt 1",
-        src: image1,
-    },
-    {
-        name: "Amazing Shirt 2",
-        src: image2,
-    },
-    {
-        name: "Amazing Shirt 3",
-        src: image3,
-    },
-    {
-        name: "Amazing Shirt 4",
-        src: image4,
-    },
-    {
-        name: "Amazing Shirt 5",
-        src: image5,
-    },
-    {
-        name: "Amazing Shirt 6",
-        src: image6,
-    },
-    {
-        name: "Amazing Shirt 7",
-        src: image7,
-    },
-    {
-        name: "Amazing Shirt 8",
-        src: image8,
-    },
-    {
-        name: "Amazing Shirt 9",
-        src: image9,
-    },
-    {
-        name: "Amazing Shirt 10",
-        src: image10,
-    },
-    {
-        name: "Amazing Shirt 11",
-        src: image11,
-    },
-    {
-        name: "Amazing Shirt 12",
-        src: image12,
-    }
-]
+class List extends PureComponent {
 
-class App extends PureComponent {
+    handleOrderSuccess = (item) => {
+        this.props.history.push("/success", item);
+    };
+
     render() {
         return (
             <div className="application">
@@ -78,7 +22,7 @@ class App extends PureComponent {
                 </div>
                 <div className="clr-row applications">
                     {
-                        applications.map((item) => <Card item={item} key={item.name} />)
+                        applications.map((item) => <Card item={item} key={item.name} handleOrderSuccess={this.handleOrderSuccess} />)
                     }
                 </div>
             </div>
@@ -86,4 +30,33 @@ class App extends PureComponent {
     }
 }
 
-export default App;
+const OrderSuccess = ({location}) => (
+    location.state && location.state.src 
+    ? 
+    <div className="order-success">
+        <h1>Congratulations!</h1>
+        <clr-icon shape="success-standard" class="is-success" size="132"></clr-icon>
+        <div className="image-container">
+            <img src={location.state.src} alt={location.state.name}/>
+        </div>
+        <div className="claim-steps">
+            <h3>To claim your t-shirt:</h3>
+            <div>1. Go to the kiosk</div>
+            <div>2. Show your badge</div>
+            <div>3. Show this page</div>
+        </div>
+    </div>
+    : <Redirect to="/"/>
+);
+
+export default function App() {
+    return (
+        <Router>
+            <Switch>
+                <Route exact path="/" component={List} />
+                <Route path="/success" component={OrderSuccess} />
+                <Redirect to="/" />
+            </Switch>
+        </Router>
+      );
+};

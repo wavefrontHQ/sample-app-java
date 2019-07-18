@@ -4,7 +4,7 @@
     min-width: 300px;
 }
 
-.image-container {
+.card .image-container {
     width: 200px;
     height: 200px;
     margin: auto;
