@@ -4,6 +4,9 @@ import com.wfsample.common.dto.DeliveryStatusDTO;
 import com.wfsample.common.dto.PackedShirtsDTO;
 import com.wfsample.service.DeliveryApi;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -16,22 +19,33 @@ import javax.ws.rs.core.Response;
  *
  * @author Hao Song (songhao@vmware.com).
  */
+@RestController
 public class DeliveryController implements DeliveryApi {
   AtomicInteger tracking = new AtomicInteger(0);
   AtomicInteger dispatch = new AtomicInteger(0);
   AtomicInteger cancel = new AtomicInteger(0);
   private final Random rand = new Random(System.currentTimeMillis());
 
+  @Value("${request.slow.percentage}")
+  private double percentage;
+
+  @Value("${request.slow.latency}")
+  private long latency;
+
   @Override
   public Response dispatch(String orderNum, PackedShirtsDTO packedShirts) {
+    try {
+      if (rand.nextDouble() < percentage) {
+        Thread.sleep(latency);
+      } else {
+        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
+      }
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
     if (dispatch.incrementAndGet() % 20 == 0) {
       return Response.status(Response.Status.BAD_REQUEST).entity(
           new DeliveryStatusDTO(null, "no shirts to deliver")).build();
-    }
-    try {
-      Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
-    } catch (InterruptedException e) {
-      e.printStackTrace();
     }
     String trackingNum = UUID.randomUUID().toString();
     System.out.println("Tracking number of Order:" + orderNum + " is " + trackingNum);
