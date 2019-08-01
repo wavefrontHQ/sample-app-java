@@ -1,5 +1,10 @@
 server:
   port: 50054
 
+request:
+  slow:
+    percentage: 0.0
+    latency: 0
+
 applicationTagsYamlFile: "./delivery/applicationTags.yaml"
 wfReportingConfigYamlFile: "./wfReportingConfig.yaml"

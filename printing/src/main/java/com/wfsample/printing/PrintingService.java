@@ -20,6 +20,7 @@ import com.wfsample.common.GrpcServiceConfig;
 
 import org.apache.commons.lang3.BooleanUtils;
 
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import io.grpc.Server;
@@ -73,6 +74,7 @@ public class PrintingService {
 
   static class PrintingImpl extends PrintingGrpc.PrintingImplBase {
     private final GrpcServiceConfig conf;
+    private final Random rand = new Random(0L);
     private final AtomicInteger print = new AtomicInteger(0);
     private final AtomicInteger addcolor = new AtomicInteger(0);
     private final AtomicInteger restock = new AtomicInteger(0);
@@ -87,7 +89,7 @@ public class PrintingService {
     @Override
     public void printShirts(PrintRequest request, StreamObserver<Shirt> responseObserver) {
       try {
-        Thread.sleep(85);
+        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -105,7 +107,7 @@ public class PrintingService {
     public void addPrintColor(Color request,
                               StreamObserver<com.wfsample.beachshirts.Status> responseObserver) {
       try {
-        Thread.sleep(63);
+        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -121,7 +123,7 @@ public class PrintingService {
     public void restockColor(Color request,
                              StreamObserver<com.wfsample.beachshirts.Status> responseObserver) {
       try {
-        Thread.sleep(40);
+        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -137,7 +139,7 @@ public class PrintingService {
     public void getAvailableColors(Void request,
                                    StreamObserver<AvailableColors> responseObserver) {
       try {
-        Thread.sleep(20);
+        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

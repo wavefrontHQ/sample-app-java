@@ -21,6 +21,7 @@ import com.wfsample.service.StylingApi;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import javax.ws.rs.core.Response;
 
@@ -75,6 +76,7 @@ public class StylingService extends Application<DropwizardServiceConfig> {
     private final PackagingGrpc.PackagingBlockingStub packaging;
     // sample set of static styles.
     private List<ShirtStyleDTO> shirtStyleDTOS = new ArrayList<>();
+    private final Random rand = new Random(0L);
 
     public StylingWebResource(WavefrontClientInterceptor clientInterceptor) {
       ShirtStyleDTO dto = new ShirtStyleDTO();
@@ -100,11 +102,11 @@ public class StylingService extends Application<DropwizardServiceConfig> {
 
     public List<ShirtStyleDTO> getAllStyles() {
       try {
-        Thread.sleep(10);
+        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
         printing.getAvailableColors(Void.getDefaultInstance());
-        Thread.sleep(10);
+        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
         packaging.getPackingTypes(Void.getDefaultInstance());
-        Thread.sleep(10);
+        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
         return shirtStyleDTOS;
       } catch (Exception e) {
         throw new RuntimeException(e);
@@ -113,11 +115,11 @@ public class StylingService extends Application<DropwizardServiceConfig> {
 
     public PackedShirtsDTO makeShirts(String id, int quantity) {
       try {
-        Thread.sleep(20);
+        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
         Iterator<Shirt> shirts = printing.printShirts(PrintRequest.newBuilder().
             setStyleToPrint(ShirtStyle.newBuilder().setName(id).setImageUrl(id + "Image").build()).
             setQuantity(quantity).build());
-        Thread.sleep(20);
+        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
         if (quantity < 30) {
           packaging.wrapShirts(WrapRequest.newBuilder().addAllShirts(() ->
               shirts).build());
@@ -125,7 +127,7 @@ public class StylingService extends Application<DropwizardServiceConfig> {
           packaging.giftWrap(WrapRequest.newBuilder().addAllShirts(() ->
               shirts).build());
         }
-        Thread.sleep(20);
+        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
         return new PackedShirtsDTO(new ArrayList<>());
       } catch (Exception e) {
         throw new RuntimeException(e);
@@ -135,9 +137,9 @@ public class StylingService extends Application<DropwizardServiceConfig> {
     @Override
     public Response addStyle(String id) {
       try {
-        Thread.sleep(10);
+        Thread.sleep((long) (rand.nextGaussian() * 10 + 10));
         printing.addPrintColor(Color.newBuilder().setColor("rgb").build());
-        Thread.sleep(10);
+        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
         return Response.ok().build();
       } catch (Exception e) {
         throw new RuntimeException(e);
@@ -147,9 +149,9 @@ public class StylingService extends Application<DropwizardServiceConfig> {
     @Override
     public Response restockStyle(String id) {
       try {
-        Thread.sleep(10);
+        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
         printing.restockColor(Color.newBuilder().setColor("rgb").build());
-        Thread.sleep(10);
+        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
         packaging.restockMaterial(WrappingType.newBuilder().setWrappingType("wrap").build());
         return Response.ok().build();
       } catch (Exception e) {
