@@ -40,7 +40,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
  */
 public class ShoppingService extends Application<DropwizardServiceConfig> {
   private DropwizardServiceConfig configuration;
-  private final Random rand = new Random(System.currentTimeMillis());
+  private final Random rand = new Random(0L);
 
   private ShoppingService() {
   }

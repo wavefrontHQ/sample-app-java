@@ -80,7 +80,7 @@ public class PackagingService {
     private final AtomicInteger restock = new AtomicInteger(0);
     private final AtomicInteger wrap = new AtomicInteger(0);
     private final AtomicInteger giftWrap = new AtomicInteger(0);
-    private final Random rand = new Random(System.currentTimeMillis());
+    private final Random rand = new Random(0L);
 
     @Override
     public void wrapShirts(WrapRequest request, StreamObserver<PackedShirts> responseObserver) {

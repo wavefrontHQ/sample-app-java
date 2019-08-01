@@ -74,7 +74,7 @@ public class PrintingService {
 
   static class PrintingImpl extends PrintingGrpc.PrintingImplBase {
     private final GrpcServiceConfig conf;
-    private final Random rand = new Random(System.currentTimeMillis());
+    private final Random rand = new Random(0L);
     private final AtomicInteger print = new AtomicInteger(0);
     private final AtomicInteger addcolor = new AtomicInteger(0);
     private final AtomicInteger restock = new AtomicInteger(0);

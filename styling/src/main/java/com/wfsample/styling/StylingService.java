@@ -76,7 +76,7 @@ public class StylingService extends Application<DropwizardServiceConfig> {
     private final PackagingGrpc.PackagingBlockingStub packaging;
     // sample set of static styles.
     private List<ShirtStyleDTO> shirtStyleDTOS = new ArrayList<>();
-    private final Random rand = new Random(System.currentTimeMillis());
+    private final Random rand = new Random(0L);
 
     public StylingWebResource(WavefrontClientInterceptor clientInterceptor) {
       ShirtStyleDTO dto = new ShirtStyleDTO();

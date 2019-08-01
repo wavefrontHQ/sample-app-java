@@ -24,7 +24,7 @@ public class DeliveryController implements DeliveryApi {
   AtomicInteger tracking = new AtomicInteger(0);
   AtomicInteger dispatch = new AtomicInteger(0);
   AtomicInteger cancel = new AtomicInteger(0);
-  private final Random rand = new Random(System.currentTimeMillis());
+  private final Random rand = new Random(0L);
 
   @Value("${request.slow.percentage}")
   private double percentage;
