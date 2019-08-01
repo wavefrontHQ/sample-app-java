@@ -6,5 +6,8 @@ request:
     percentage: 0.0
     latency: 0
 
+  error:
+    interval: 0
+
 applicationTagsYamlFile: "./delivery/applicationTags.yaml"
 wfReportingConfigYamlFile: "./wfReportingConfig.yaml"

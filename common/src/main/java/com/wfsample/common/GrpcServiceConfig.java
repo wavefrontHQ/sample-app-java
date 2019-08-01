@@ -27,6 +27,12 @@ public class GrpcServiceConfig {
   @JsonProperty
   private String wfReportingConfigYamlFile;
 
+  /**
+   * Error operation for every {servicePerOps} requests.
+   */
+  @JsonProperty
+  private int errorInterval = 0;
+
   public int getGrpcPort() {
     return grpcPort;
   }
@@ -37,5 +43,9 @@ public class GrpcServiceConfig {
 
   public String getWfReportingConfigYamlFile() {
     return wfReportingConfigYamlFile;
+  }
+
+  public int getErrorInterval() {
+    return errorInterval;
   }
 }

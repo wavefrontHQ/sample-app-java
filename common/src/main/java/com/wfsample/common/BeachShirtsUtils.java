@@ -16,6 +16,7 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Utilities for use by the various beachshirts application related services.
@@ -51,5 +52,11 @@ public final class BeachShirtsUtils {
       config = new GrpcServiceConfig();
     }
     return config;
+  }
+
+  public static boolean isErrorRequest(AtomicInteger index, int globalErrorInterval,
+                                       int defaultErrorInterval) {
+    return index.incrementAndGet() %
+        (globalErrorInterval > 0 ? globalErrorInterval : defaultErrorInterval) == 0;
   }
 }
