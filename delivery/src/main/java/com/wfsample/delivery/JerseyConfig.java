@@ -19,9 +19,9 @@ import javax.ws.rs.ApplicationPath;
 public class JerseyConfig extends ResourceConfig {
 
   @Inject
-  public JerseyConfig(WavefrontJerseyFactory wavefrontJerseyFactory) {
+  public JerseyConfig(WavefrontJerseyFactory wavefrontJerseyFactory, Environment env) {
     register(wavefrontJerseyFactory.getWavefrontJerseyFilter());
-    register(new DeliveryController());
+    register(new DeliveryController(env));
   }
 
 }
