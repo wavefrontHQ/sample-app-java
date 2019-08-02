@@ -74,6 +74,7 @@ public class PrintingService {
 
   static class PrintingImpl extends PrintingGrpc.PrintingImplBase {
     private final GrpcServiceConfig conf;
+    private final int globalErrorInterval;
     private final Random rand = new Random(0L);
     private final AtomicInteger print = new AtomicInteger(0);
     private final AtomicInteger addcolor = new AtomicInteger(0);
@@ -84,6 +85,7 @@ public class PrintingService {
 
     public PrintingImpl(GrpcServiceConfig grpcServiceConfig) {
       this.conf = grpcServiceConfig;
+      this.globalErrorInterval = grpcServiceConfig.getErrorInterval();
     }
 
     @Override
@@ -93,7 +95,7 @@ public class PrintingService {
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      if (print.incrementAndGet() % 20 == 0) {
+      if (BeachShirtsUtils.isErrorRequest(print, globalErrorInterval, 20)) {
         // not enough ink to print shirts
         responseObserver.onError(Status.RESOURCE_EXHAUSTED.asRuntimeException());
       }
@@ -111,7 +113,7 @@ public class PrintingService {
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      if (addcolor.incrementAndGet() % 20 == 0) {
+      if (BeachShirtsUtils.isErrorRequest(addcolor, globalErrorInterval, 20)) {
         // not enough ink to print shirts
         responseObserver.onError(Status.INTERNAL.asRuntimeException());
       }
@@ -127,7 +129,7 @@ public class PrintingService {
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      if (restock.incrementAndGet() % 20 == 0) {
+      if (BeachShirtsUtils.isErrorRequest(restock, globalErrorInterval, 20)) {
         // not enough ink to print shirts
         responseObserver.onError(Status.UNAVAILABLE.asRuntimeException());
       }
@@ -143,7 +145,7 @@ public class PrintingService {
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      if (restock.incrementAndGet() % 40 == 0) {
+      if (BeachShirtsUtils.isErrorRequest(restock, globalErrorInterval, 40)) {
         // not enough ink to print shirts
         responseObserver.onError(Status.CANCELLED.asRuntimeException());
       }

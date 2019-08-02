@@ -62,7 +62,7 @@ public class PackagingService {
         new WavefrontServerTracerFactory.Builder(grpcReporter, applicationTags).
             withTracer(tracer).recordStreamingStats().build();
     ServerBuilder builder = ServerBuilder.forPort(config.getGrpcPort()).
-        addService(new PackagingImpl()).addStreamTracerFactory(tracerFactory);
+        addService(new PackagingImpl(config)).addStreamTracerFactory(tracerFactory);
     Server packaging = builder.build();
     System.out.println("Starting Packaging server ...");
     packaging.start();
@@ -76,11 +76,18 @@ public class PackagingService {
   }
 
   static class PackagingImpl extends PackagingGrpc.PackagingImplBase {
+    private final GrpcServiceConfig conf;
+    private final int globalErrorInterval;
     private final AtomicInteger getTypes = new AtomicInteger(0);
     private final AtomicInteger restock = new AtomicInteger(0);
     private final AtomicInteger wrap = new AtomicInteger(0);
     private final AtomicInteger giftWrap = new AtomicInteger(0);
     private final Random rand = new Random(0L);
+
+    public PackagingImpl(GrpcServiceConfig grpcServiceConfig) {
+      this.conf = grpcServiceConfig;
+      this.globalErrorInterval = conf.getErrorInterval();
+    }
 
     @Override
     public void wrapShirts(WrapRequest request, StreamObserver<PackedShirts> responseObserver) {
@@ -89,7 +96,7 @@ public class PackagingService {
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      if (wrap.incrementAndGet() % 40 == 0) {
+      if (BeachShirtsUtils.isErrorRequest(wrap, globalErrorInterval, 40)) {
         // can't pack more than 10 shirts at once.
         responseObserver.onError(Status.INTERNAL.asRuntimeException());
       }
@@ -101,7 +108,7 @@ public class PackagingService {
 
     @Override
     public void giftWrap(WrapRequest request, StreamObserver<GiftPack> responseObserver) {
-      if (giftWrap.incrementAndGet() % 30 == 0) {
+      if (BeachShirtsUtils.isErrorRequest(giftWrap, globalErrorInterval, 30)) {
         responseObserver.onError(Status.INTERNAL.asRuntimeException());
       }
       try {
@@ -136,7 +143,7 @@ public class PackagingService {
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      if (restock.incrementAndGet() % 20 == 0) {
+      if (BeachShirtsUtils.isErrorRequest(restock, globalErrorInterval, 20)) {
         responseObserver.onError(Status.INTERNAL.asRuntimeException());
       } else {
         responseObserver.onNext(com.wfsample.beachshirts.Status.newBuilder().
@@ -152,7 +159,7 @@ public class PackagingService {
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      if (getTypes.incrementAndGet() % 30 == 0) {
+      if (BeachShirtsUtils.isErrorRequest(getTypes, globalErrorInterval, 30)) {
         responseObserver.onError(Status.INTERNAL.asRuntimeException());
       } else {
         responseObserver.onNext(WrappingTypes.newBuilder().addWrappingType(WrappingType.

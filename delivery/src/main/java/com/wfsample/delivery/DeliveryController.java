@@ -1,5 +1,6 @@
 package com.wfsample.delivery;
 
+import com.wfsample.common.BeachShirtsUtils;
 import com.wfsample.common.dto.DeliveryStatusDTO;
 import com.wfsample.common.dto.PackedShirtsDTO;
 import com.wfsample.service.DeliveryApi;
@@ -32,6 +33,9 @@ public class DeliveryController implements DeliveryApi {
   @Value("${request.slow.latency}")
   private long latency;
 
+  @Value("${request.error.interval}")
+  private int globalErrorInterval;
+
   @Override
   public Response dispatch(String orderNum, PackedShirtsDTO packedShirts) {
     try {
@@ -43,7 +47,7 @@ public class DeliveryController implements DeliveryApi {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    if (dispatch.incrementAndGet() % 20 == 0) {
+    if (BeachShirtsUtils.isErrorRequest(dispatch, globalErrorInterval, 20)) {
       return Response.status(Response.Status.BAD_REQUEST).entity(
           new DeliveryStatusDTO(null, "no shirts to deliver")).build();
     }
@@ -54,7 +58,7 @@ public class DeliveryController implements DeliveryApi {
 
   @Override
   public Response trackOrder(String orderNum) {
-    if (tracking.incrementAndGet() % 8 == 0) {
+    if (BeachShirtsUtils.isErrorRequest(tracking, globalErrorInterval, 8)) {
       return Response.status(Response.Status.BAD_REQUEST).build();
     }
     try {
@@ -72,7 +76,7 @@ public class DeliveryController implements DeliveryApi {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    if (cancel.incrementAndGet() % 7 == 0) {
+    if (BeachShirtsUtils.isErrorRequest(cancel, globalErrorInterval, 7)) {
       return Response.status(Response.Status.BAD_REQUEST).build();
     }
     return Response.ok().build();
