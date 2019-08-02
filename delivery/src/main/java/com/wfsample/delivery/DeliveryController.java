@@ -5,7 +5,8 @@ import com.wfsample.common.dto.DeliveryStatusDTO;
 import com.wfsample.common.dto.PackedShirtsDTO;
 import com.wfsample.service.DeliveryApi;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Random;
@@ -27,14 +28,16 @@ public class DeliveryController implements DeliveryApi {
   AtomicInteger cancel = new AtomicInteger(0);
   private final Random rand = new Random(0L);
 
-  @Value("${request.slow.percentage}")
   private double percentage;
-
-  @Value("${request.slow.latency}")
   private long latency;
-
-  @Value("${request.error.interval}")
   private int globalErrorInterval;
+
+  @Autowired
+  public DeliveryController(Environment env) {
+    percentage = env.getProperty("request.slow.percentage", Double.class);
+    latency = env.getProperty("request.slow.latency", Long.class);
+    globalErrorInterval = env.getProperty("request.error.interval", Integer.class);
+  }
 
   @Override
   public Response dispatch(String orderNum, PackedShirtsDTO packedShirts) {
