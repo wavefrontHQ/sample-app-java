@@ -1,0 +1,31 @@
+.application {
+  width: 100%;
+  max-width: 900px;
+  padding: 18px;
+
+
+  .main-container {
+    padding-top: 24px;
+
+    .container .row {
+      margin-bottom: 90px;
+    }
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: 1.4rem;
+    color: black;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .application .main-container .container .row {
+    margin-bottom: 36px;
+
+    & > div {
+      margin-bottom: 18px;
+    }
+  }
+}

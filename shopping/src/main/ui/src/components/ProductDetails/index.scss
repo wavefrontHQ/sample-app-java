@@ -1,0 +1,32 @@
+.product-details {
+
+  .text {
+    margin-bottom: 36px;
+
+    & > * {
+      margin-bottom: 12px;
+    }
+
+    .year, .subtitle, .description {
+      font-weight: lighter;
+    }
+  
+    .description {
+      font-size: .8rem;
+    }
+  }
+  
+  .out-of-stock {
+    font-weight: lighter;
+    font-size: .8rem;
+    margin-bottom: 12px;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  .previous-shirts {
+    margin-bottom: 24px;
+  }
+}

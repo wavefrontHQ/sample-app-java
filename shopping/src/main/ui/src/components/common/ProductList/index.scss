@@ -1,0 +1,45 @@
+.product-list {
+  .card {
+    margin-bottom: 48px;
+    border: none;
+
+    img {
+      margin-bottom: 18px;
+      height: 252px;
+    }
+
+    .card-body {
+      padding: 0;
+
+      .card-title {
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+
+      .card-text {
+        font-weight: lighter;
+        font-size: 0.9rem;
+
+        span {
+          display: block;
+          margin-bottom: 6px;
+
+          &.year {
+            font-style: italic;
+          }
+        }
+      }
+
+      button {
+        font-weight: bold;
+      }
+
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .product-list .card {
+    margin: 30px 0;
+  }
+}
