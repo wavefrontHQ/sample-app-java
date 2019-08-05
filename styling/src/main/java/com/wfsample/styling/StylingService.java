@@ -30,6 +30,8 @@ import io.dropwizard.setup.Environment;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
+import static com.wfsample.common.BeachShirtsUtils.getRequestLatency;
+
 /**
  * Driver for styling service which manages different styles of shirts and takes orders for a shirts
  * of a given style.
@@ -102,11 +104,11 @@ public class StylingService extends Application<DropwizardServiceConfig> {
 
     public List<ShirtStyleDTO> getAllStyles() {
       try {
-        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
+        Thread.sleep(getRequestLatency(20, 10, rand));
         printing.getAvailableColors(Void.getDefaultInstance());
-        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
+        Thread.sleep(getRequestLatency(20, 10, rand));
         packaging.getPackingTypes(Void.getDefaultInstance());
-        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
+        Thread.sleep(getRequestLatency(20, 10, rand));
         return shirtStyleDTOS;
       } catch (Exception e) {
         throw new RuntimeException(e);
@@ -115,11 +117,11 @@ public class StylingService extends Application<DropwizardServiceConfig> {
 
     public PackedShirtsDTO makeShirts(String id, int quantity) {
       try {
-        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
+        Thread.sleep(getRequestLatency(20, 10, rand));
         Iterator<Shirt> shirts = printing.printShirts(PrintRequest.newBuilder().
             setStyleToPrint(ShirtStyle.newBuilder().setName(id).setImageUrl(id + "Image").build()).
             setQuantity(quantity).build());
-        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
+        Thread.sleep(getRequestLatency(20, 10, rand));
         if (quantity < 30) {
           packaging.wrapShirts(WrapRequest.newBuilder().addAllShirts(() ->
               shirts).build());
@@ -127,7 +129,7 @@ public class StylingService extends Application<DropwizardServiceConfig> {
           packaging.giftWrap(WrapRequest.newBuilder().addAllShirts(() ->
               shirts).build());
         }
-        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
+        Thread.sleep(getRequestLatency(20, 10, rand));
         return new PackedShirtsDTO(new ArrayList<>());
       } catch (Exception e) {
         throw new RuntimeException(e);
@@ -137,9 +139,9 @@ public class StylingService extends Application<DropwizardServiceConfig> {
     @Override
     public Response addStyle(String id) {
       try {
-        Thread.sleep((long) (rand.nextGaussian() * 10 + 10));
+        Thread.sleep(getRequestLatency(20, 10, rand));
         printing.addPrintColor(Color.newBuilder().setColor("rgb").build());
-        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
+        Thread.sleep(getRequestLatency(20, 10, rand));
         return Response.ok().build();
       } catch (Exception e) {
         throw new RuntimeException(e);
@@ -149,9 +151,9 @@ public class StylingService extends Application<DropwizardServiceConfig> {
     @Override
     public Response restockStyle(String id) {
       try {
-        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
+        Thread.sleep(getRequestLatency(20, 10, rand));
         printing.restockColor(Color.newBuilder().setColor("rgb").build());
-        Thread.sleep((long) (rand.nextGaussian() * 10 + 20));
+        Thread.sleep(getRequestLatency(20, 10, rand));
         packaging.restockMaterial(WrappingType.newBuilder().setWrappingType("wrap").build());
         return Response.ok().build();
       } catch (Exception e) {

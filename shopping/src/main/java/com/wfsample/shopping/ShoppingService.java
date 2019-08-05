@@ -30,6 +30,7 @@ import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
+import static com.wfsample.common.BeachShirtsUtils.getRequestLatency;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 /**
@@ -94,7 +95,7 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
     @Path("/menu")
     public Response getShoppingMenu(@Context HttpHeaders httpHeaders) {
       try {
-        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
+        Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -106,7 +107,7 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
     @Consumes(APPLICATION_JSON)
     public Response orderShirts(OrderDTO orderDTO, @Context HttpHeaders httpHeaders) {
       try {
-        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
+        Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -123,7 +124,7 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
     @Path("/status/{orderNum}")
     public Response getOrderStatus() {
       try {
-        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
+        Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -135,7 +136,7 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
     @Consumes(APPLICATION_JSON)
     public Response cancelShirtsOrder() {
       try {
-        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
+        Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -147,7 +148,7 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
     @Consumes(APPLICATION_JSON)
     public Response updateInventory() {
       try {
-        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
+        Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

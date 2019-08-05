@@ -16,6 +16,7 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -58,5 +59,15 @@ public final class BeachShirtsUtils {
                                        int defaultErrorInterval) {
     return index.incrementAndGet() %
         (globalErrorInterval > 0 ? globalErrorInterval : defaultErrorInterval) == 0;
+  }
+
+  public static long getRequestLatency(long mean, long delta, Random rand) {
+    double r = rand.nextGaussian();
+    while (r > 1 || r < -1) {
+      // Generate the normally distributed value with mean of 0.0, standard deviation of 1.0 and
+      // in the range of [-1, 1]
+      r = rand.nextGaussian();
+    }
+    return (long) r * delta + mean;
   }
 }

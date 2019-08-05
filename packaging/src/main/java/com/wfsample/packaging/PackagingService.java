@@ -31,6 +31,8 @@ import io.grpc.ServerBuilder;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
+import static com.wfsample.common.BeachShirtsUtils.getRequestLatency;
+
 /**
  * Driver for the packaging service which packs the a given shirt.
  *
@@ -92,7 +94,7 @@ public class PackagingService {
     @Override
     public void wrapShirts(WrapRequest request, StreamObserver<PackedShirts> responseObserver) {
       try {
-        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
+        Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -112,7 +114,7 @@ public class PackagingService {
         responseObserver.onError(Status.INTERNAL.asRuntimeException());
       }
       try {
-        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
+        Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -120,7 +122,7 @@ public class PackagingService {
         int resp = (int) Math.round(rand.nextDouble() *
             100.0) + 10000;
         try {
-          Thread.sleep((long) (rand.nextGaussian() * 200 + 1400));
+          Thread.sleep(getRequestLatency(1400, 200, rand));
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
@@ -139,7 +141,7 @@ public class PackagingService {
     public void restockMaterial(WrappingType request,
                                 StreamObserver<com.wfsample.beachshirts.Status> responseObserver) {
       try {
-        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
+        Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -155,7 +157,7 @@ public class PackagingService {
     @Override
     public void getPackingTypes(Void request, StreamObserver<WrappingTypes> responseObserver) {
       try {
-        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
+        Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
