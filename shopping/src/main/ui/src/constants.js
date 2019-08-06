@@ -48,6 +48,7 @@ export const Products = [
         name: "VMworld 2019 Shirt",
         subtitle: "3D Microservies Observability",
         description: "The combined view of metrics, histograms, traces is essential to maintaining production microservices, and a leapfrog over the blind spots of legacy APM tools.",
+        briefDescription: "Description for VMworld 2019 Shirt",
         year: 2019,
         src: image1,
         inventory: 100

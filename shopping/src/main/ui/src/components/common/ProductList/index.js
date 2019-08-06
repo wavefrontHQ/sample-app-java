@@ -17,14 +17,14 @@ class ProductList extends React.Component {
       <Container id="product-list" className="product-list">
         <Row>
           {
-            products.map(({id, src, name, description, year}) => (
+            products.map(({id, src, name, description, briefDescription, year}) => (
               <Col key={id} sm={12} md={4}>
                 <Card border="light">
                   <Card.Img variant="top" src={src} />
                   <Card.Body>
                     <Card.Title>{name}</Card.Title>
                     <Card.Text>
-                      <span>{description}</span>
+                      <span>{briefDescription || description}</span>
                       <span className="year">{year}</span>
                     </Card.Text>
                     <Link to={`/product-details/${id}`}>
