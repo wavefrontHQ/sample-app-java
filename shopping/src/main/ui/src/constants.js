@@ -12,7 +12,10 @@ import image11 from './images/2019-bo-team-shirt.png';
 import image12 from './images/gothoiatstf1_1_1200x1200.jpg';
 
 import QRCodeImage from "./images/QR-code.png"
-export {QRCodeImage};
+import VMworldLogoImg from "./images/vmworld.png";
+import VMwareLogoImg from "./images/vmware.png";
+
+export {QRCodeImage, VMworldLogoImg, VMwareLogoImg};
 
 export const url = "http://localhost";
 

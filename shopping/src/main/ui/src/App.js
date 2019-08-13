@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import TopBar from './components/TopBar';
+import TopBar from './components/common/TopBar';
+import Footer from './components/common/Footer/Footer';
 import Home from './components/Home';
 import ProductDetails from './components/ProductDetails';
 import Checkout from './components/Checkout';
@@ -94,6 +95,16 @@ class App extends PureComponent {
                 })
               }
             </div>
+            {
+              routes.map((route, index) => (
+                <Route
+                  key={index}
+                  path={route.path}
+                  exact={route.exact}
+                  render={() => <Footer />}
+                />
+              ))
+            }
           </div>
         </ScrollToTop>
       </Router>

@@ -25,20 +25,19 @@ class Success extends React.PureComponent {
     return (
       <Container className="success">
         <Row>
-          <Col sm={12} md={6}>
+          <Col sm={12} md={8}>
             <div className="message">
               <div className="title">
-                You've claimed your T-Shirt!
+                You are eligible for a free T-shirt!
               </div>
               <div className="description">
-                Head to the Wavefront Kiosk with this QR code to pick up your shirt 
-                <span> after 11:00am</span> (when the key note is finished).
+                Please head to Materials Pickup in Moscone West, Lobby Level with this QR code
+                <span> after 10:30am</span> (when the keynote is finished.) <span>while stocks last</span>.
               </div>
-              <Image src={QRCodeImage} fluid />
             </div>
           </Col>
-          <Col sm={12} md={6} className="animation">
-            A nice animation goes here.
+          <Col sm={12} md={4} className="qr-code">
+            <Image src={QRCodeImage} fluid />
           </Col>
         </Row>
         <Row className="videos">

@@ -13,7 +13,7 @@ import "./index.scss";
 class Checkout extends React.Component {
   render() {
     const {cartItems, emptyCart} = this.props;
-    return (
+    return (cartItems.length > 0) ? (
       <Container className="checkout">
         <Row>
           <Col sm={12} md={5} className="product">
@@ -21,7 +21,7 @@ class Checkout extends React.Component {
               <clr-icon shape="arrow left" />
               <span>Back Home</span>
             </Link>
-            {cartItems.length > 0 && <hr/>}
+            <hr/>
             <div className="products-in-cart">
               {
                 cartItems.map((id) => {
@@ -46,19 +46,26 @@ class Checkout extends React.Component {
               Confirm Your Order
             </div>
             <div>
-              {
-                cartItems.length > 0 && <div>{cartItems.length} T Shirt{cartItems.length > 1 && "s"}</div>
-              }
-              <div>Picked Up at VMworld Booth Location</div>
+              <div>{cartItems.length} T Shirt{cartItems.length > 1 && "s"}</div>
+              <div>Pickup at Materials Pickup, Moscone West, Lobby Level</div>
             </div>
             <Link to="/success">
-              <Button variant="dark" disabled={cartItems.length === 0} onClick={emptyCart}>
-                Claim Shirt
+              <Button variant="primary" onClick={emptyCart}>
+                Confirm
               </Button>
             </Link>
           </Col>
         </Row>
       </Container>
+    ) : (
+      <div className="checkout-empty">
+        <Link to="/" className="back-home">
+          <clr-icon shape="arrow left" />
+          <span>Back Home</span>
+        </Link>
+        <div className="title">Empty Shopping Cart</div>
+        <div className="subtitle">You have no items selected.</div>
+      </div>
     );
   }
 }

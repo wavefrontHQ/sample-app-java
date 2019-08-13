@@ -16,39 +16,31 @@ class Home extends React.Component {
 
   render() {
     const [mainProduct, ...restProducts] = Products;
-    const {src, id} = mainProduct;
+    const {id} = mainProduct;
 
     return (
       <div className="home">
-        <Container>
-          <Row>
-            <Col sm={12} md={6}>
-              <Image src={src} fluid />
-            </Col>
-            <Col sm={12} md={6}>
-              <div className="text">
-                <div id="homepage-title" className="title">
-                  <div>Filler Text About</div>
-                  <div>VMworld & Shirts</div>
-                </div>
-                <div className="description">
-                  <div>Claim your 2019 VMworld Shirt.</div>
-                  <div>First come first serve, 1000 shirts available.</div>
-                </div>
-              </div>
-              
-              <Link to={`/product-details/${id}`}>
-                <Button variant="dark" className="view-2019-shirt-btn">
-                  View 2019 Shirt
-                </Button>
-              </Link>
-              <HashLink to="/#product-list" smooth className="view-past">
-                <div>View Past Collection</div>
-                <clr-icon shape="arrow down" />
-              </HashLink>
-            </Col>
-          </Row>
-        </Container>
+        <div className="main">
+          <div className="title">
+            <div>This app is a demo, but the shirt is real!</div>
+            <div>VMworld General Session Demo Shirt</div>
+          </div>
+          <div className="description">
+            Limited supplies available.
+          </div>
+
+          <Link to={`/product-details/${id}`}>
+            <Button variant="primary" className="view-2019-shirt-btn">
+              View 2019 Shirt
+            </Button>
+          </Link>
+
+          <HashLink to="/#product-list" smooth className="view-past">
+            <div>View Past Collection</div>
+            <clr-icon shape="arrow down" />
+          </HashLink>
+        </div>
+        
         <ProductList products={restProducts} />
       </div>
     );

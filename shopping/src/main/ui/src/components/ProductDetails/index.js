@@ -12,26 +12,27 @@ import "./index.scss";
 
 class ProductDetails extends React.PureComponent {
 
-  state = { disabled: false };
-
   onClick = () => {
     const {id} = this.props.match.params;
     this.props.addToCart(id);
-    this.setState({ disabled: true });
     window.scrollTo(0, 0);
   }
 
   render() {
+    const {cartItems} = this.props;
     const id = parseInt(this.props.match.params.id);
+    
+    const inCart = !!cartItems.find((item) => item == id);
+
     const product = findProduct(id);
     const {src, name, year, subtitle, description, inventory} = product;
     const otherProducts = Products.filter((product) => product.id !== id);
-
+    
     return (
       <div className="product-details">
         <Container>
           <Row>
-            <Col sm={12} md={6}>
+            <Col sm={12} md={6} className="main-product">
               <Image src={src} fluid />
             </Col>
             <Col sm={12} md={6}>
@@ -43,8 +44,8 @@ class ProductDetails extends React.PureComponent {
               </div>
               <div>
                 {!!inventory || <div className="out-of-stock">Out of stock now</div>}
-                <Button variant="dark" onClick={this.onClick} disabled={this.state.disabled || !inventory}>
-                  {id == 0 ? "Claim VMworld Shirt" : "Add to My Cart"}
+                <Button variant="primary" onClick={this.onClick} disabled={inCart || !inventory}>
+                  {inCart ? "Added to Cart" : "Add to Cart"}
                 </Button>
               </div>
             </Col>

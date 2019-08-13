@@ -1,0 +1,33 @@
+.top-bar {
+
+  .logo {
+    margin-bottom: 12px;
+  }
+
+  .bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-bottom: 6px;
+    border-bottom: 6px solid #0094d2;
+
+    .title {
+      font-size: 2rem;
+    }
+
+    clr-icon {
+      color: black;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .top-bar {
+    .bar {
+      .title {
+        font-size: 1.6rem;
+      }
+    }
+  }
+}

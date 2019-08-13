@@ -3,18 +3,6 @@
   .product {
     margin-bottom: 18px;
 
-    .back-home {
-      display: flex;
-      align-items: center;
-      font-weight: bold;
-      color: black;
-      cursor: pointer;
-
-      span {
-        padding-left: 6px;
-      }
-    }
-
     .products-in-cart {
       display: flex;
       flex-direction: column;
@@ -54,6 +42,33 @@
     button {
       width: 100%;
     }
+  }
+}
+
+.checkout-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > * {
+    margin-bottom: 30px;
+  }
+
+  .subtitle {
+    font-weight: lighter;
+  }
+}
+
+.back-home {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: black;
+  width: 132px;
+  cursor: pointer;
+
+  span {
+    padding-left: 6px;
   }
 }
 

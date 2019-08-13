@@ -1,53 +1,54 @@
 .home {
 
-  .text {
-    margin-bottom: 24px;
-
-    & > * {
-      margin-bottom: 18px;
-    }
-
-    #homepage-title {
-      -webkit-text-fill-color: white;
-      -webkit-text-stroke-width: .7px;
-      -webkit-text-stroke-color: black;
-    
-      font-size: 2rem;
-    }
-  
-    .description {
-      font-weight: lighter;
-    }
-  }
-  
-  button {
-    width: 100%;
-
-    &.view-2019-shirt-btn {
-      margin-bottom: 36px;
-    }
-  }
-
-  .view-past {
+  .main {
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    position: absolute;
-    bottom: -24px;
-    width: calc(100% - 30px);
+    margin-bottom: 90px;
 
-    color: black;
-    font-weight: bold;
+    .title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 18px;
+      font-size: 2.8rem;
+    }
+
+    .description {
+      font-weight: lighter;
+      margin-bottom: 24px;
+    }
+
+    button.view-2019-shirt-btn {
+      width: 300px;
+      margin-bottom: 48px;
+    }
+
+    .view-past {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      color: black;
+      font-weight: bold;
+    }
   }
 }
 
-@media (min-width: 768px) {
-  .home .text #homepage-title {
-    font-size: 2.4rem;
-  }
+@media (max-width: 768px) {
+  .home {
+    .main {
+      margin-bottom: 36px;
 
-  .home .view-past {
-    bottom: 12px;
+      .title {
+        font-size: 2rem;
+        text-align: center;
+    
+        div {
+          margin-bottom: 12px;
+        }
+      }
+    }
   }
 }

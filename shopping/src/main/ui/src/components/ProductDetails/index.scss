@@ -30,3 +30,11 @@
     margin-bottom: 24px;
   }
 }
+
+@media (max-width: 768px) {
+  .product-details {
+    .main-product {
+      margin-bottom: 24px;
+    }
+  }
+}

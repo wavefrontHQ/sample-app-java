@@ -28,7 +28,7 @@ class ProductList extends React.Component {
                       <span className="year">{year}</span>
                     </Card.Text>
                     <Link to={`/product-details/${id}`}>
-                      <Button variant="outline-dark">View Shirt</Button>
+                      <Button variant="outline-primary">View Shirt</Button>
                     </Link>
                   </Card.Body>
                 </Card>

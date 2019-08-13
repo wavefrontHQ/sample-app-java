@@ -5,10 +5,14 @@
 
 
   .main-container {
-    padding-top: 24px;
+    padding: 36px 0;
 
-    .container .row {
+    .container {
       margin-bottom: 90px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 
@@ -18,14 +22,9 @@
     color: black;
   }
 
-}
-
-@media (max-width: 768px) {
-  .application .main-container .container .row {
-    margin-bottom: 36px;
-
-    & > div {
-      margin-bottom: 18px;
-    }
+  .btn-primary {
+    border-color: #00498C;
+    background-color: #00498C;
   }
+
 }
