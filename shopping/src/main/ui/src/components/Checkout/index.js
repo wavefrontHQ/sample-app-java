@@ -47,7 +47,7 @@ class Checkout extends React.Component {
             </div>
             <div>
               <div>{cartItems.length} T Shirt{cartItems.length > 1 && "s"}</div>
-              <div>Pickup at Materials Pickup, Moscone West, Lobby Level</div>
+              <div>Pick Up at Materials Pickup, Moscone West, Lobby Level</div>
             </div>
             <Link to="/success">
               <Button variant="primary" onClick={emptyCart}>
