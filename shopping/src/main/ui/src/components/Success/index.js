@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ResponsiveEmbed from 'react-bootstrap/ResponsiveEmbed'
-import { QRCodeImage } from "../../constants";
+import { QRCodeImage, LoveUGesture } from "../../constants";
 
 import "./index.scss";
 
@@ -28,7 +28,10 @@ class Success extends React.PureComponent {
           <Col sm={12} md={8}>
             <div className="message">
               <div className="title">
-                You are eligible for a free T-shirt!
+                <span>You are eligible</span> 
+                <span> for a free T-shirt</span>
+                <Image className="love-u-gesture" src={LoveUGesture} height="20" width="20" /> 
+                !
               </div>
               <div className="description">
                 Please head to Materials Pickup in Moscone West, Lobby Level with this QR code

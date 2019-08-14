@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -30,6 +31,10 @@ class ProductDetails extends React.PureComponent {
     
     return (
       <div className="product-details">
+        <Link to="/" className="back-home">
+          <clr-icon shape="arrow left" />
+          <span>Back Home</span>
+        </Link>
         <Container>
           <Row>
             <Col sm={12} md={6} className="main-product">
@@ -38,7 +43,7 @@ class ProductDetails extends React.PureComponent {
             <Col sm={12} md={6}>
               <div className="text">
                 <div className="title">{name}</div>
-                <div className="year">{year}</div>
+                <div className="year">{year ? year : "Year - ???"}</div>
                 <div className="subtitle">{subtitle}</div>
                 <div className="description">{description}</div>
               </div>

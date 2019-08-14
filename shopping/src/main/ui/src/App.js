@@ -55,6 +55,13 @@ class App extends PureComponent {
     }
   };
 
+  removeFromCart = (id) => {
+    const { cartItems } = this.state;
+    this.setState({
+      cartItems: cartItems.filter((cartItemId) => cartItemId != id)
+    });
+  };
+
   emptyCart = () => this.setState({ cartItems: [] });
 
   render() {
@@ -87,6 +94,7 @@ class App extends PureComponent {
                             {...props}
                             cartItems={this.state.cartItems}
                             addToCart={this.addToCart}
+                            removeFromCart={this.removeFromCart}
                             emptyCart={this.emptyCart}
                           />
                       }

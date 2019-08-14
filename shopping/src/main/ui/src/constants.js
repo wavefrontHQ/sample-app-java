@@ -1,21 +1,28 @@
-import image1 from './images/2018-bo-ops-shirt.png';
-import image2 from './images/2018-bo-vans-closeup.png';
-import image3 from './images/2018-bo-vans-shirt.png';
-import image4 from './images/2019-bo-blueops-shirt.png';
-import image5 from './images/2019-bo-brownops-shirt.png';
-import image6 from './images/2019-bo-brownops-closeup.png';
-import image7 from './images/2019-bo-meetup-closeup.png';
-import image8 from './images/2019-bo-meetup-shirt.png';
-import image9 from './images/2019-bo-splash-shirt.jpg';
-import image10 from './images/2019-bo-team-closeup.png';
-import image11 from './images/2019-bo-team-shirt.png';
-import image12 from './images/gothoiatstf1_1_1200x1200.jpg';
+import POSSIBLE_BEGINS from "./images/possible-begins-with-me.png";
+import UNLEASH_MONSTER from "./images/2011-unleash-monster.png";
+import RUN_DRS from "./images/2012-run-drs.png";
+import FOUNDATION from "./images/2016-foundation.png";
+import EUC from "./images/2017-euc.png";
+import GSX from "./images/build-tough-gsx.png";
+import VSAN from "./images/captain-vsan.png";
+import REBOOT_EARTH from "./images/reboot-earth.png";
+import NSX from "./images/run-vmware-nsx.png";
+import VMINCLUSION from "./images/vminclusion.png";
+import WORKSTATION from "./images/workstation.png";
+import VCLOUD_SUITE from "./images/vCloud-Suite.png";
+import BEACHOPS from "./images/BeachOps.png";
 
 import QRCodeImage from "./images/QR-code.png"
+import LoveUGesture from "./images/love-you-gesture-emoji-by-twitter.png";
 import VMworldLogoImg from "./images/vmworld.png";
 import VMwareLogoImg from "./images/vmware.png";
 
-export {QRCodeImage, VMworldLogoImg, VMwareLogoImg};
+export {
+  QRCodeImage, 
+  LoveUGesture,
+  VMworldLogoImg, 
+  VMwareLogoImg
+};
 
 export const url = "http://localhost";
 
@@ -47,91 +54,98 @@ export const orderShirts = (name, quantity) => {
 
 export const Products = [
     {
-        id: 0,
-        name: "VMworld 2019 Shirt",
-        subtitle: "3D Microservies Observability",
-        description: "The combined view of metrics, histograms, traces is essential to maintaining production microservices, and a leapfrog over the blind spots of legacy APM tools.",
-        briefDescription: "Description for VMworld 2019 Shirt",
-        year: 2019,
-        src: image1,
-        inventory: 100
+      id: 0,
+      name: "VMworld 2019 Shirt",
+      // subtitle: "3D Microservies Observability",
+      description: "Possible Begins With Me",
+      // briefDescription: "Description for VMworld 2019 Shirt",
+      year: 2019,
+      src: POSSIBLE_BEGINS,
+      inventory: 100
     },
     {
-        id: 1,
-        name: "Amazing Shirt 2",
-        description: "Description for Amazing Shirt 2",
-        year: 2018,
-        src: image2,
+      id: 2,
+      name: "VMware Foundation",
+      description: "Serve Learn Inspire",
+      year: null,
+      src: FOUNDATION,
     },
     {
-        id: 2,
-        name: "Amazing Shirt 3",
-        description: "Description for Amazing Shirt 3",
-        year: 2017,
-        src: image3,
+      id: 7,
+      name: "VMware vSAN",
+      description: "I am Captain vSAN!",
+      year: null,
+      src: VSAN,
     },
     {
-        id: 3,
-        name: "Amazing Shirt 4",
-        description: "Description for Amazing Shirt 4",
-        year: 2016,
-        src: image4,
+      id: 12,
+      name: "VMware vSphere 5",
+      description: "Unleash the Monster",
+      year: null,
+      src: UNLEASH_MONSTER,
     },
     {
-        id: 4,
-        name: "Amazing Shirt 5",
-        description: "Description for Amazing Shirt 5",
-        year: 2015,
-        src: image5,
+      id: 6,
+      name: "VMware Sustainability",
+      description: "Reboot the Earth",
+      year: null,
+      src: REBOOT_EARTH,
     },
     {
-        id: 5,
-        name: "Amazing Shirt 6",
-        description: "Description for Amazing Shirt 6",
-        year: 2014,
-        src: image6,
+      id: 1,
+      name: "vSphere DRS",
+      description: "RUN DRS!",
+      year: null,
+      src: RUN_DRS,
     },
     {
-        id: 6,
-        name: "Amazing Shirt 7",
-        description: "Description for Amazing Shirt 7",
-        year: 2014,
-        src: image7,
+      id: 8,
+      name: "VMinclusion",
+      description: "women@vmware",
+      year: null,
+      src: VMINCLUSION,
     },
     {
-        id: 7,
-        name: "Amazing Shirt 8",
-        description: "Description for Amazing Shirt 8",
-        year: 2013,
-        src: image8,
+      id: 4,
+      name: "VMware NSX",
+      description: "Run VMware NSX!",
+      year: null,
+      src: NSX,
     },
     {
-        id: 8,
-        name: "Amazing Shirt 9",
-        description: "Description for Amazing Shirt 9",
-        year: 2012,
-        src: image9,
+      id: 9,
+      name: "VMware Workstation",
+      description: "Workstation 4",
+      year: null,
+      src: WORKSTATION,
     },
     {
-        id: 9,
-        name: "Amazing Shirt 10",
-        description: "Description for Amazing Shirt 10",
-        year: 2012,
-        src: image10,
+      id: 5,
+      name: "VMware GSX Server",
+      description: "Built GSX Tough",
+      year: null,
+      src: GSX,
     },
     {
-        id: 10,
-        name: "Amazing Shirt 11",
-        description: "Description for Amazing Shirt 11",
-        year: 2012,
-        src: image11,
+      id: 3,
+      name: "VMware End User Computing",
+      description: "EUC Rocks!",
+      year: null,
+      src: EUC,
     },
     {
-        id: 11,
-        name: "Amazing Shirt 12",
-        description: "Description for Amazing Shirt 12",
-        year: 2012,
-        src: image12,
+      id: 10,
+      name: "VMware vCloud Suite",
+      description: "vCloud Suite 6.0",
+      year: null,
+      src: VCLOUD_SUITE,
+    },
+    {
+      id: 11,
+      name: "Wavefront by VMware",
+      description: "#BeachOps",
+      year: 2018,
+      src: BEACHOPS,
     }
 ];
 

@@ -1,3 +1,7 @@
+.checkout, .checkout-empty {
+  padding: 36px 0;
+}
+
 .checkout {
 
   .product {
@@ -17,6 +21,7 @@
         }
 
         .text-container {
+          width: calc(60% - 16px);
           padding: 12px;
 
           .name {
@@ -29,6 +34,11 @@
             font-weight: lighter;
             font-size: 0.7rem;
           }
+        }
+
+        .remove {
+          margin-top: 12px;
+          cursor: pointer;
         }
       }
     }
