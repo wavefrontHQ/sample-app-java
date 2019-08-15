@@ -33,6 +33,13 @@
       button {
         width: 100%;
         font-weight: lighter;
+        color: #1d428a;
+        border-color: #1d428a;
+        
+        &:hover {
+          color: white;
+          background-color: #1d428a;
+        }
       }
 
     }

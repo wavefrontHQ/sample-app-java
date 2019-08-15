@@ -1,24 +1,21 @@
 .top-bar {
 
-  .logo {
-    margin-bottom: 12px;
-  }
-
   .bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    padding-bottom: 6px;
+    padding-bottom: 18px;
     border-bottom: 6px solid #0094d2;
-
-    .title {
-      font-size: 2rem;
-    }
+    margin-bottom: 12px;
 
     clr-icon {
       color: black;
     }
+  }
+
+  #brand {
+    font-size: 1.8rem;
   }
 }
 
@@ -28,6 +25,10 @@
       .title {
         font-size: 1.6rem;
       }
+    }
+
+    #brand {
+      font-size: 1.5rem;
     }
   }
 }

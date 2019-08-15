@@ -19,7 +19,7 @@ class Home extends React.Component {
         <div className="main">
           <div className="title">
             <div>This app is a demo, but the shirt is real!</div>
-            <div>VMworld General Session Demo Shirt</div>
+            <div>VMworld 2019 General Session Demo Shirt</div>
           </div>
           <div className="description">
             Limited supplies available.

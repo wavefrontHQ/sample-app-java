@@ -34,19 +34,17 @@ class TopBar extends React.Component {
     const cartIconClass = cartItems && cartItems.length && "has-badge";
     return (
       <div className="top-bar">
-        <div className="logo">
-          <Image src={VMworldLogoImg} fluid />
-        </div>
         <div className="bar">
-          <Link to="/">
-            <div className="title">Tanzu Tees</div>
-          </Link>
+          <Image src={VMworldLogoImg} fluid />
           <OverlayTrigger ref={this.ref} trigger={null} placement="bottom" overlay={popover}>
             <Link to="/checkout">
               <clr-icon shape="shopping-cart" class={cartIconClass} size={26} />
             </Link>
           </OverlayTrigger>
         </div>
+        <Link to="/">
+          <div id="brand" className="title">Tanzu Tees</div>
+        </Link>
       </div>
     )
   }

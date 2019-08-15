@@ -1,15 +1,20 @@
-import POSSIBLE_BEGINS from "./images/possible-begins-with-me.png";
-import UNLEASH_MONSTER from "./images/2011-unleash-monster.png";
-import RUN_DRS from "./images/2012-run-drs.png";
-import FOUNDATION from "./images/2016-foundation.png";
-import EUC from "./images/2017-euc.png";
-import GSX from "./images/build-tough-gsx.png";
-import VSAN from "./images/captain-vsan.png";
-import REBOOT_EARTH from "./images/reboot-earth.png";
-import NSX from "./images/run-vmware-nsx.png";
-import VMINCLUSION from "./images/vminclusion.png";
-import WORKSTATION from "./images/workstation.png";
-import VCLOUD_SUITE from "./images/vCloud-Suite.png";
+// import POSSIBLE_BEGINS from "./images/possible-begins-with-me.png";
+import VMW19 from "./images/compressed/VMW19.jpg"
+
+import UNLEASH_MONSTER from "./images/compressed/2011-unleash-monster.jpg";
+import RUN_DRS from "./images/compressed/2012-run-drs.jpg";
+// import FOUNDATION from "./images/2016-foundation.png";
+import INVENTOR from "./images/compressed/inventor.jpg";
+import EUC from "./images/compressed/2017-euc.jpg";
+import GSX from "./images/compressed/build-tough-gsx.jpg";
+import VSAN from "./images/compressed/captain-vsan.jpg";
+import REBOOT_EARTH from "./images/compressed/reboot-earth.jpg";
+import NSX from "./images/compressed/run-vmware-nsx.jpg";
+import VMINCLUSION from "./images/compressed/vminclusion.jpg";
+import WORKSTATION from "./images/compressed/workstation.jpg";
+// import VCLOUD_SUITE from "./images/vCloud-Suite.png";
+import DATACENTER from "./images/compressed/2008-datacenter-in-peril.jpg";
+
 import BEACHOPS from "./images/BeachOps.png";
 
 import QRCodeImage from "./images/QR-code.png"
@@ -55,20 +60,20 @@ export const orderShirts = (name, quantity) => {
 export const Products = [
     {
       id: 0,
-      name: "VMworld 2019 Shirt",
+      name: "VMworld 2019 General Session Demo Shirt",
       // subtitle: "3D Microservies Observability",
-      description: "Possible Begins With Me",
+      description: "Make your Mark!",
       // briefDescription: "Description for VMworld 2019 Shirt",
       year: 2019,
-      src: POSSIBLE_BEGINS,
+      src: VMW19,
       inventory: 100
     },
     {
       id: 2,
-      name: "VMware Foundation",
-      description: "Serve Learn Inspire",
+      name: "VMware Inventor",
+      description: "VMware Patent Program",
       year: null,
-      src: FOUNDATION,
+      src: INVENTOR,
     },
     {
       id: 7,
@@ -135,10 +140,10 @@ export const Products = [
     },
     {
       id: 10,
-      name: "VMware vCloud Suite",
-      description: "vCloud Suite 6.0",
-      year: null,
-      src: VCLOUD_SUITE,
+      name: "Site Recovery Manager 1.0",
+      description: "DATACENTER in PERIL!",
+      year: 2008,
+      src: DATACENTER,
     },
     {
       id: 11,
