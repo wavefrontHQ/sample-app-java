@@ -15,7 +15,8 @@ import WORKSTATION from "./images/compressed/workstation.jpg";
 // import VCLOUD_SUITE from "./images/vCloud-Suite.png";
 import DATACENTER from "./images/compressed/2008-datacenter-in-peril.jpg";
 
-import BEACHOPS from "./images/BeachOps.png";
+// import BEACHOPS from "./images/BeachOps.png";
+import WAVEFRONT from "./images/compressed/Wavefront.jpeg";
 
 import QRCodeImage from "./images/QR-code.png"
 import LoveUGesture from "./images/love-you-gesture-emoji-by-twitter.png";
@@ -150,7 +151,7 @@ export const Products = [
       name: "Wavefront by VMware",
       description: "#BeachOps",
       year: 2018,
-      src: BEACHOPS,
+      src: WAVEFRONT,
     }
 ];
 
