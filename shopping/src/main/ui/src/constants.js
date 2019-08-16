@@ -84,11 +84,11 @@ export const Products = [
       src: VSAN,
     },
     {
-      id: 12,
-      name: "VMware vSphere 5",
-      description: "Unleash the Monster",
-      year: null,
-      src: UNLEASH_MONSTER,
+      id: 11,
+      name: "Wavefront by VMware",
+      description: "#BeachOps",
+      year: 2018,
+      src: WAVEFRONT,
     },
     {
       id: 6,
@@ -98,11 +98,11 @@ export const Products = [
       src: REBOOT_EARTH,
     },
     {
-      id: 1,
-      name: "vSphere DRS",
-      description: "RUN DRS!",
+      id: 12,
+      name: "VMware vSphere 5",
+      description: "Unleash the Monster",
       year: null,
-      src: RUN_DRS,
+      src: UNLEASH_MONSTER,
     },
     {
       id: 8,
@@ -147,12 +147,12 @@ export const Products = [
       src: DATACENTER,
     },
     {
-      id: 11,
-      name: "Wavefront by VMware",
-      description: "#BeachOps",
-      year: 2018,
-      src: WAVEFRONT,
-    }
+      id: 1,
+      name: "vSphere DRS",
+      description: "RUN DRS!",
+      year: null,
+      src: RUN_DRS,
+    },
 ];
 
 export const findProduct = (id) => Products.find(({id: productId}) => productId == id);
