@@ -17,7 +17,7 @@ class ProductList extends React.Component {
       <Container id="product-list" className="product-list">
         <Row>
           {
-            products.map(({id, src, name, description, briefDescription, year}) => (
+            products.map(({id, src, name, description, briefDescription, year, inventory}) => (
               <Col key={id} sm={12} md={4}>
                 <Card border="light">
                   <Card.Img variant="top" src={src} />
@@ -26,6 +26,11 @@ class ProductList extends React.Component {
                     <Card.Text>
                       <span>{briefDescription || description}</span>
                       <span className="year">{year ? year : "Year - ???"}</span>
+                      {
+                        inventory && inventory > 0 
+                        ? null
+                        : <span className="out-of-stock">Out of stock</span>
+                      }
                     </Card.Text>
                     <Link to={`/product-details/${id}`}>
                       <Button variant="outline-primary">View Shirt</Button>

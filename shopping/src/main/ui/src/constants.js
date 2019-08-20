@@ -6,12 +6,9 @@ import RUN_DRS from "./images/compressed/2012-run-drs.jpg";
 // import FOUNDATION from "./images/2016-foundation.png";
 import INVENTOR from "./images/compressed/inventor.jpg";
 import EUC from "./images/compressed/2017-euc.jpg";
-import GSX from "./images/compressed/build-tough-gsx.jpg";
-import VSAN from "./images/compressed/captain-vsan.jpg";
 import REBOOT_EARTH from "./images/compressed/reboot-earth.jpg";
 import NSX from "./images/compressed/run-vmware-nsx.jpg";
 import VMINCLUSION from "./images/compressed/vminclusion.jpg";
-import WORKSTATION from "./images/compressed/workstation.jpg";
 // import VCLOUD_SUITE from "./images/vCloud-Suite.png";
 import DATACENTER from "./images/compressed/2008-datacenter-in-peril.jpg";
 
@@ -20,12 +17,19 @@ import WAVEFRONT from "./images/compressed/Wavefront.jpeg";
 
 import QRCodeImage from "./images/QR-code.png"
 import LoveUGesture from "./images/love-you-gesture-emoji-by-twitter.png";
+import GoldenGate from "./images/success/Golden-Gate.jpg";
+import AngelMedFlight from "./images/success/AngelMedFlight.png";
+import TechSoup from "./images/success/TechSoup.png";
+
 import VMworldLogoImg from "./images/vmworld.png";
 import VMwareLogoImg from "./images/vmware.png";
 
 export {
   QRCodeImage, 
   LoveUGesture,
+  GoldenGate,
+  AngelMedFlight,
+  TechSoup,
   VMworldLogoImg, 
   VMwareLogoImg
 };
@@ -73,15 +77,8 @@ export const Products = [
       id: 2,
       name: "VMware Inventor",
       description: "VMware Patent Program",
-      year: null,
+      year: 2012,
       src: INVENTOR,
-    },
-    {
-      id: 7,
-      name: "VMware vSAN",
-      description: "I am Captain vSAN!",
-      year: null,
-      src: VSAN,
     },
     {
       id: 11,
@@ -94,49 +91,35 @@ export const Products = [
       id: 6,
       name: "VMware Sustainability",
       description: "Reboot the Earth",
-      year: null,
+      year: 2018,
       src: REBOOT_EARTH,
     },
     {
       id: 12,
       name: "VMware vSphere 5",
       description: "Unleash the Monster",
-      year: null,
+      year: 2011,
       src: UNLEASH_MONSTER,
     },
     {
       id: 8,
-      name: "VMinclusion",
-      description: "women@vmware",
-      year: null,
+      name: "Women@VMware POD",
+      description: "VMinclusion",
+      year: 2016,
       src: VMINCLUSION,
     },
     {
       id: 4,
       name: "VMware NSX",
       description: "Run VMware NSX!",
-      year: null,
+      year: 2017,
       src: NSX,
-    },
-    {
-      id: 9,
-      name: "VMware Workstation",
-      description: "Workstation 4",
-      year: null,
-      src: WORKSTATION,
-    },
-    {
-      id: 5,
-      name: "VMware GSX Server",
-      description: "Built GSX Tough",
-      year: null,
-      src: GSX,
     },
     {
       id: 3,
       name: "VMware End User Computing",
       description: "EUC Rocks!",
-      year: null,
+      year: 2016,
       src: EUC,
     },
     {
@@ -150,7 +133,7 @@ export const Products = [
       id: 1,
       name: "vSphere DRS",
       description: "RUN DRS!",
-      year: null,
+      year: 2012,
       src: RUN_DRS,
     },
 ];

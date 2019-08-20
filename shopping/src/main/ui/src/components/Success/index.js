@@ -3,20 +3,18 @@ import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ResponsiveEmbed from 'react-bootstrap/ResponsiveEmbed'
-import { QRCodeImage, LoveUGesture } from "../../constants";
+import { QRCodeImage, LoveUGesture, GoldenGate, AngelMedFlight, TechSoup } from "../../constants";
 
 import "./index.scss";
 
-const VideoCard = ({src}) => (
-  <div>
+const Card = ({id, title, src}) => (
+  <div id={id} style={{textAlign: "center"}}>
     <div style={{marginBottom: "12px"}}>
-      <div style={{fontWeight: "lighter"}}>Marketing Video</div>
-      <div style={{fontWeight: "bold", fontSize: "1.4rem"}}>Learn more about video title</div>
+      <div style={{fontWeight: "bold"}}>{title}</div>
     </div>
-    <ResponsiveEmbed aspectRatio="16by9">
-      <embed src={src} />
-    </ResponsiveEmbed>
+    <div className="img-container">
+      <Image src={src} fluid />
+    </div>
   </div>
 );
 
@@ -35,7 +33,7 @@ class Success extends React.PureComponent {
               </div>
               <div className="description">
                 Please head to Materials Pickup in Moscone West, Lobby Level with this QR code
-                <span> after 11:00 am US Pacific Time</span> (when the keynote is finished.) <span>while stocks last</span>.
+                <span> after 11:00 am US Pacific Time</span> (when the keynote is finished) <span>while supplies last</span>.
               </div>
             </div>
           </Col>
@@ -43,12 +41,32 @@ class Success extends React.PureComponent {
             <Image src={QRCodeImage} fluid />
           </Col>
         </Row>
-        <Row className="videos">
-          <Col sm={12} md={6}>
-            <VideoCard src="https://www.youtube.com/embed/FOweDNW7uME" />
+        <Row className="image-links">
+          <Col sm={12} md={4}>
+            <a href="https://www.vmware.com/company/news/updates.html" target="_blank" rel="noopener noreferrer">
+              <Card 
+                title="A CTO perspective on VMworld U.S. 2019" 
+                src={GoldenGate}
+              />
+            </a>
           </Col>
-          <Col sm={12} md={6}>
-            <VideoCard src="https://www.youtube.com/embed/d58lArzMeGA" />
+          <Col sm={12} md={4}>
+            <a href="https://www.vmware.com/radius/impact/angel-medflight-tech-for-good" target="_blank" rel="noopener noreferrer">
+              <Card 
+                id="Angel-MedFlight"
+                title="When Every Moment Counts" 
+                src={AngelMedFlight}
+              />
+            </a>
+          </Col>
+          <Col sm={12} md={4}>
+            <a href="https://www.vmware.com/radius/impact/techsoup-nonprofit-digital-transformation/" target="_blank" rel="noopener noreferrer">
+              <Card 
+                id="TechSoup"
+                title="All for One and Tech for All" 
+                src={TechSoup}
+              />
+            </a>
           </Col>
         </Row>
       </Container>

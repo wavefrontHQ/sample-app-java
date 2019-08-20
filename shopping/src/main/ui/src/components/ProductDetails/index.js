@@ -27,7 +27,7 @@ class ProductDetails extends React.PureComponent {
 
     const product = findProduct(id);
     const {src, name, year, subtitle, description, inventory} = product;
-    const otherProducts = Products.filter((product) => product.id !== id);
+    const otherProducts = Products.filter((product) => product.id !== id && product.id !== 0);
     
     return (
       <div className="product-details">
@@ -48,7 +48,7 @@ class ProductDetails extends React.PureComponent {
                 <div className="description">{description}</div>
               </div>
               <div>
-                {!!inventory || <div className="out-of-stock">Out of stock now</div>}
+                {!!inventory || <div className="out-of-stock">Out of stock</div>}
                 <Button variant="primary" onClick={this.onClick} disabled={inCart || !inventory}>
                   {inCart ? "Added to Cart" : "Add to Cart"}
                 </Button>
