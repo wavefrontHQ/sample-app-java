@@ -34,7 +34,7 @@ class Footer extends React.PureComponent {
             Terms of Use
           </a>
           <a href="https://www.vmware.com/help/privacy.html" target="_blank" rel="noopener noreferrer">
-            privacy
+            Privacy
           </a>
           <div className="social-media-icons">
             <a href="https://twitter.com/vmworld" target="_blank" rel="noopener noreferrer">
