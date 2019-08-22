@@ -32,8 +32,8 @@ class Success extends React.PureComponent {
                 !
               </div>
               <div className="description">
-                Please head to Materials Pickup in Moscone West, Lobby Level with this QR code
-                <span> after 11:00 am US Pacific Time</span> (when the keynote is finished) <span>while supplies last</span>.
+                Please head to Materials Pickup in Moscone West, Lobby Level, with this QR code
+                <span> after 11:00 am Pacific Time</span> (when the General Session is finished) <span>while supplies last</span>.
               </div>
             </div>
           </Col>
@@ -41,11 +41,12 @@ class Success extends React.PureComponent {
             <Image src={QRCodeImage} fluid />
           </Col>
         </Row>
+        <hr />
         <Row className="image-links">
           <Col sm={12} md={4}>
             <a href="https://www.vmware.com/company/news/updates.html" target="_blank" rel="noopener noreferrer">
               <Card 
-                title="A CTO perspective on VMworld U.S. 2019" 
+                title="A CTO perspective on VMworld 2019 US" 
                 src={GoldenGate}
               />
             </a>
