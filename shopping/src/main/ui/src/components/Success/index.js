@@ -33,7 +33,7 @@ class Success extends React.PureComponent {
               </div>
               <div className="description">
                 Please head to Materials Pickup in Moscone West, Lobby Level, with this QR code
-                <span> after 11:00 am Pacific Time</span> (when the General Session is finished) <span>while supplies last</span>.
+                <span> after 3:00 pm Pacific Time while supplies last</span>.
               </div>
             </div>
           </Col>
