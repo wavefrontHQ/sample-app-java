@@ -44,7 +44,7 @@ class Success extends React.PureComponent {
         <hr />
         <Row className="image-links">
           <Col sm={12} md={4}>
-            <a href="https://www.vmware.com/company/news/updates.html" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.vmware.com/company/news/updates/vmworld-2019-our-relentless-pursuit-of-the-possible.html" target="_blank" rel="noopener noreferrer">
               <Card 
                 title="A CTO perspective on VMworld 2019 US" 
                 src={GoldenGate}
