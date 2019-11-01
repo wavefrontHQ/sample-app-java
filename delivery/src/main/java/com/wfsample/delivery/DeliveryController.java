@@ -15,6 +15,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.ws.rs.core.Response;
 
+import static com.wfsample.common.BeachShirtsUtils.getRequestLatency;
+
 /**
  * Controller for delivery service which is responsible for dispatching shirts returning tracking
  * number for a given order.
@@ -45,7 +47,7 @@ public class DeliveryController implements DeliveryApi {
       if (rand.nextDouble() < percentage) {
         Thread.sleep(latency);
       } else {
-        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
+        Thread.sleep(getRequestLatency(100, 70, rand));
       }
     } catch (InterruptedException e) {
       e.printStackTrace();
@@ -65,7 +67,7 @@ public class DeliveryController implements DeliveryApi {
       return Response.status(Response.Status.BAD_REQUEST).build();
     }
     try {
-      Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
+      Thread.sleep(getRequestLatency(100, 70, rand));
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
@@ -75,7 +77,7 @@ public class DeliveryController implements DeliveryApi {
   @Override
   public Response cancelOrder(String orderNum) {
     try {
-      Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
+      Thread.sleep(getRequestLatency(100, 70, rand));
     } catch (InterruptedException e) {
       e.printStackTrace();
     }

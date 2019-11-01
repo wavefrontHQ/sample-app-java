@@ -28,6 +28,8 @@ import io.grpc.ServerBuilder;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
+import static com.wfsample.common.BeachShirtsUtils.getRequestLatency;
+
 /**
  * Driver for the printing service which prints a shirt of given style.
  *
@@ -91,7 +93,7 @@ public class PrintingService {
     @Override
     public void printShirts(PrintRequest request, StreamObserver<Shirt> responseObserver) {
       try {
-        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
+        Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -109,7 +111,7 @@ public class PrintingService {
     public void addPrintColor(Color request,
                               StreamObserver<com.wfsample.beachshirts.Status> responseObserver) {
       try {
-        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
+        Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -125,7 +127,7 @@ public class PrintingService {
     public void restockColor(Color request,
                              StreamObserver<com.wfsample.beachshirts.Status> responseObserver) {
       try {
-        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
+        Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -141,7 +143,7 @@ public class PrintingService {
     public void getAvailableColors(Void request,
                                    StreamObserver<AvailableColors> responseObserver) {
       try {
-        Thread.sleep((long) (rand.nextGaussian() * 70 + 100));
+        Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
