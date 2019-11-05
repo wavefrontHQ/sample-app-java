@@ -81,9 +81,6 @@ public class PrintingService {
     private final AtomicInteger print = new AtomicInteger(0);
     private final AtomicInteger addcolor = new AtomicInteger(0);
     private final AtomicInteger restock = new AtomicInteger(0);
-    private final AtomicInteger available = new AtomicInteger(0);
-
-
 
     public PrintingImpl(GrpcServiceConfig grpcServiceConfig) {
       this.conf = grpcServiceConfig;
