@@ -18,3 +18,8 @@ java -jar ./delivery/target/delivery-0.9.0-SNAPSHOT.jar  --spring.config.locatio
 http://localhost:50050/api/shop/order
 Payload: {"styleName" : "testStyle1","quantity" : 5}
 ```
+- Optionally you can run a load generation script included in the project to generate requests 
+using the below command from the root directory of the project.
+```
+java -jar ./loadgen/target/loadgen-0.9.0-SNAPSHOT.jar localhost 50050 2 
+```
