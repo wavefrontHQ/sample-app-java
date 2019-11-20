@@ -5,10 +5,18 @@ import com.wavefront.sdk.jersey.WavefrontJerseyFactory;
 import com.wfsample.common.BeachShirtsUtils;
 import com.wfsample.common.dto.DeliveryStatusDTO;
 import com.wfsample.common.dto.PackedShirtsDTO;
+import com.wfsample.common.dto.ShirtDTO;
 import com.wfsample.service.DeliveryApi;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import io.opentracing.log.Fields;
+import io.opentracing.rxjava2.TracingObserver;
+import io.opentracing.rxjava2.TracingRxJava2Utils;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -40,12 +48,73 @@ public class DeliveryController implements DeliveryApi {
   private long latency;
   private int globalErrorInterval;
 
+  private Observer<ShirtDTO> dispatchObserver;
+  private Observer<String> asyncCleanUpObserver;
+
   @Autowired
   public DeliveryController(Environment env, WavefrontJerseyFactory wavefrontJerseyFactory) {
     percentage = env.getProperty("request.slow.percentage", Double.class);
     latency = env.getProperty("request.slow.latency", Long.class);
     globalErrorInterval = env.getProperty("request.error.interval", Integer.class);
     this.tracer = wavefrontJerseyFactory.getTracer();
+    TracingRxJava2Utils.enableTracing(tracer);
+    this.dispatchObserver = new TracingObserver<>(new Observer<ShirtDTO>() {
+      @Override
+      public void onSubscribe(Disposable disposable) {
+        System.out.println("dispatch started!");
+      }
+
+      @Override
+      public void onNext(ShirtDTO shirtDTO) {
+        try {
+          Thread.sleep(5);
+          System.out.println(shirtDTO.getStyle().getName() + " processed!");
+        } catch (InterruptedException ignored) {
+        }
+      }
+
+      @Override
+      public void onError(Throwable throwable) {
+        System.out.println("dispatch error!");
+      }
+
+      @Override
+      public void onComplete() {
+        try {
+          Thread.sleep(200);
+        } catch (InterruptedException ignored) {
+        }
+        System.out.println("dispatch completed!");
+      }
+    }, "dispatchObserver", tracer);
+
+    this.asyncCleanUpObserver = new TracingObserver<>(new Observer<String>() {
+      @Override
+      public void onSubscribe(Disposable disposable) {
+        System.out.println("clean up started!");
+      }
+
+      @Override
+      public void onNext(String jobName) {
+        try {
+          Thread.sleep(1000);
+          System.out.println("working on " + jobName);
+        } catch (InterruptedException ignored) {
+
+        }
+      }
+
+      @Override
+      public void onError(Throwable throwable) {
+        System.out.println("clean up failed!");
+      }
+
+      @Override
+      public void onComplete() {
+        System.out.println("clean up completed!");
+
+      }
+    }, "asyncCleanUpObserver", tracer);
   }
 
   @Override
@@ -78,6 +147,8 @@ public class DeliveryController implements DeliveryApi {
     }
     String trackingNum = UUID.randomUUID().toString();
     System.out.println("Tracking number of Order:" + orderNum + " is " + trackingNum);
+    Observable.fromIterable(packedShirts.getShirts()).subscribe(this.dispatchObserver);
+    Observable.just("clean up job").subscribeOn(Schedulers.newThread()).subscribe(this.asyncCleanUpObserver);
     return Response.ok(new DeliveryStatusDTO(trackingNum, "shirts delivery dispatched")).build();
   }
 
