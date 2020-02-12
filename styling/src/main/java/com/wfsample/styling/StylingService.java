@@ -30,6 +30,8 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 
 import static com.wfsample.common.BeachShirtsUtils.getRequestLatency;
 
@@ -41,6 +43,7 @@ import static com.wfsample.common.BeachShirtsUtils.getRequestLatency;
  */
 public class StylingService extends Application<DropwizardServiceConfig> {
   private DropwizardServiceConfig configuration;
+  private Tracer tracer;
 
   private StylingService() {
   }
@@ -55,6 +58,7 @@ public class StylingService extends Application<DropwizardServiceConfig> {
     this.configuration = configuration;
     WavefrontJerseyFactory factory = new WavefrontJerseyFactory(
         configuration.getApplicationTagsYamlFile(), configuration.getWfReportingConfigYamlFile());
+    this.tracer = factory.getTracer();
     WavefrontDropwizardReporter dropwizardReporter = new WavefrontDropwizardReporter.Builder(
         environment.metrics(), factory.getApplicationTags()).
         withSource(factory.getSource()).
@@ -122,6 +126,11 @@ public class StylingService extends Application<DropwizardServiceConfig> {
         Iterator<Shirt> shirts = printing.printShirts(PrintRequest.newBuilder().
             setStyleToPrint(ShirtStyle.newBuilder().setName(id).setImageUrl(id + "Image").build()).
             setQuantity(quantity).build());
+        Span span = tracer == null ? null : tracer.activeSpan();
+        if (span != null) {
+          System.out.println("Get baggage item {location: " + span.getBaggageItem("location") +
+              "} in styling service");
+        }
         Thread.sleep(getRequestLatency(20, 10, rand));
         if (quantity < 30) {
           packaging.wrapShirts(WrapRequest.newBuilder().addAllShirts(() ->

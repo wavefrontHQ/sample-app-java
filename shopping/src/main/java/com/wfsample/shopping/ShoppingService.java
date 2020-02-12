@@ -29,6 +29,8 @@ import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 
 import static com.wfsample.common.BeachShirtsUtils.getRequestLatency;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -42,6 +44,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 public class ShoppingService extends Application<DropwizardServiceConfig> {
   private DropwizardServiceConfig configuration;
   private final Random rand = new Random(0L);
+  private Tracer tracer;
 
   private ShoppingService() {
   }
@@ -65,6 +68,7 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
         configuration.getDeliveryPort();
     WavefrontJerseyFactory factory = new WavefrontJerseyFactory(
         configuration.getApplicationTagsYamlFile(), configuration.getWfReportingConfigYamlFile());
+    this.tracer = factory.getTracer();
     WavefrontDropwizardReporter dropwizardReporter = new WavefrontDropwizardReporter.Builder(
         environment.metrics(), factory.getApplicationTags()).
         withSource(factory.getSource()).
@@ -110,6 +114,11 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
         Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
         e.printStackTrace();
+      }
+      Span span = tracer == null ? null : tracer.activeSpan();
+      if (span != null) {
+        System.out.println("Set baggage item {location: NY,SF,LA} in shopping service");
+        span.setBaggageItem("location", "NY,SF,LA");
       }
       String orderNum = UUID.randomUUID().toString();
       PackedShirtsDTO packedShirts = stylingApi.makeShirts(
