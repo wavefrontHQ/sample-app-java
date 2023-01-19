@@ -158,7 +158,7 @@ public class PrintingService {
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      if (BeachShirtsUtils.isErrorRequest(restock, globalErrorInterval, 2)) {
+      if (BeachShirtsUtils.isErrorRequest(restock, globalErrorInterval, 40)) {
         // not enough ink to print shirts
         TraceLoggerUtil.traceLog(logger, tracer, Level.WARN, "unable to get available colors");
         responseObserver.onError(Status.CANCELLED.asRuntimeException());
