@@ -3,6 +3,7 @@ package com.wfsample.delivery;
 import com.google.common.collect.ImmutableMap;
 import com.wavefront.sdk.jersey.WavefrontJerseyFactory;
 import com.wfsample.common.BeachShirtsUtils;
+import com.wfsample.common.TraceLoggerUtil;
 import com.wfsample.common.dto.DeliveryStatusDTO;
 import com.wfsample.common.dto.PackedShirtsDTO;
 import com.wfsample.common.dto.ShirtDTO;
@@ -28,6 +29,10 @@ import java.util.UUID;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import static com.wfsample.common.BeachShirtsUtils.getRequestLatency;
 
 /**
@@ -38,6 +43,7 @@ import static com.wfsample.common.BeachShirtsUtils.getRequestLatency;
  */
 @RestController
 public class DeliveryController implements DeliveryApi {
+  static Logger logger =  LogManager.getLogger(DeliveryController.class);
   AtomicInteger tracking = new AtomicInteger(0);
   AtomicInteger dispatch = new AtomicInteger(0);
   AtomicInteger cancel = new AtomicInteger(0);
@@ -61,21 +67,21 @@ public class DeliveryController implements DeliveryApi {
     this.dispatchObserver = new TracingObserver<>(new Observer<ShirtDTO>() {
       @Override
       public void onSubscribe(Disposable disposable) {
-        System.out.println("dispatch started!");
+        TraceLoggerUtil.traceLog(logger, tracer.activeSpan().context().toTraceId(), Level.INFO, "dispatch started!");
       }
 
       @Override
       public void onNext(ShirtDTO shirtDTO) {
         try {
           Thread.sleep(5);
-          System.out.println(shirtDTO.getStyle().getName() + " processed!");
+          TraceLoggerUtil.traceLog(logger, tracer.activeSpan().context().toTraceId(), Level.INFO, shirtDTO.getStyle().getName() + " processed!");
         } catch (InterruptedException ignored) {
         }
       }
 
       @Override
       public void onError(Throwable throwable) {
-        System.out.println("dispatch error!");
+        TraceLoggerUtil.traceLog(logger, tracer.activeSpan().context().toTraceId(), Level.WARN, "dispatch error!");
       }
 
       @Override
@@ -84,21 +90,21 @@ public class DeliveryController implements DeliveryApi {
           Thread.sleep(200);
         } catch (InterruptedException ignored) {
         }
-        System.out.println("dispatch completed!");
+        TraceLoggerUtil.traceLog(logger, tracer.activeSpan().context().toTraceId(), Level.INFO, "dispatch completed!");
       }
     }, "dispatchObserver", tracer);
 
     this.asyncCleanUpObserver = new TracingObserver<>(new Observer<String>() {
       @Override
       public void onSubscribe(Disposable disposable) {
-        System.out.println("clean up started!");
+        TraceLoggerUtil.traceLog(logger, tracer.activeSpan().context().toTraceId(), Level.INFO, "clean up started!");
       }
 
       @Override
       public void onNext(String jobName) {
         try {
           Thread.sleep(1000);
-          System.out.println("working on " + jobName);
+          TraceLoggerUtil.traceLog(logger, tracer.activeSpan().context().toTraceId(), Level.INFO, "working on " + jobName);
         } catch (InterruptedException ignored) {
 
         }
@@ -106,12 +112,12 @@ public class DeliveryController implements DeliveryApi {
 
       @Override
       public void onError(Throwable throwable) {
-        System.out.println("clean up failed!");
+        TraceLoggerUtil.traceLog(logger, tracer.activeSpan().context().toTraceId(), Level.WARN, "clean up failed!");
       }
 
       @Override
       public void onComplete() {
-        System.out.println("clean up completed!");
+        TraceLoggerUtil.traceLog(logger, tracer.activeSpan().context().toTraceId(), Level.INFO, "clean up completed!");
 
       }
     }, "asyncCleanUpObserver", tracer);
@@ -140,6 +146,7 @@ public class DeliveryController implements DeliveryApi {
               Fields.ERROR_KIND, e.getClass().getName(),
               Fields.STACK, ExceptionUtils.getStackTrace(e)
           ));
+          TraceLoggerUtil.traceLog(logger, span.context().toTraceId(), Level.WARN, ExceptionUtils.getStackTrace(e));
         }
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(
             new DeliveryStatusDTO(null, "shirt dispatch timed out")).build();
@@ -159,6 +166,7 @@ public class DeliveryController implements DeliveryApi {
       if (span != null) {
         span.log(ImmutableMap.of(Fields.ERROR_KIND, "order number not found", "orderNum",
             orderNum));
+        TraceLoggerUtil.traceLog(logger, span.context().toTraceId(), Level.WARN, "order number not found");
       }
       return Response.status(Response.Status.BAD_REQUEST).build();
     }
@@ -182,6 +190,7 @@ public class DeliveryController implements DeliveryApi {
       if (span != null) {
         span.log(ImmutableMap.of(Fields.ERROR_KIND, "order has already been cancelled", "orderNum",
             orderNum));
+        TraceLoggerUtil.traceLog(logger, span.context().toTraceId(), Level.WARN, "order has already been cancelled");
       }
       return Response.status(Response.Status.BAD_REQUEST).build();
     }

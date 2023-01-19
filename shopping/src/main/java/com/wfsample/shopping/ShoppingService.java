@@ -29,6 +29,8 @@ import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import static com.wfsample.common.BeachShirtsUtils.getRequestLatency;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -40,6 +42,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
  * @author Srujan Narkedamalli (snarkedamall@wavefront.com).
  */
 public class ShoppingService extends Application<DropwizardServiceConfig> {
+  static Logger logger =  LogManager.getLogger(ShoppingService.class);
   private DropwizardServiceConfig configuration;
   private final Random rand = new Random(0L);
 
@@ -97,7 +100,7 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
       try {
         Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
-        e.printStackTrace();
+        logger.warn(e.getMessage());
       }
       return Response.ok(stylingApi.getAllStyles()).build();
     }
@@ -109,7 +112,7 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
       try {
         Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
-        e.printStackTrace();
+        logger.warn(e.getMessage());
       }
       String orderNum = UUID.randomUUID().toString();
       PackedShirtsDTO packedShirts = stylingApi.makeShirts(
@@ -126,7 +129,7 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
       try {
         Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
-        e.printStackTrace();
+        logger.warn(e.getMessage());
       }
       return deliveryApi.trackOrder("42");
     }
@@ -138,7 +141,7 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
       try {
         Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
-        e.printStackTrace();
+        logger.warn(e.getMessage());
       }
       return deliveryApi.cancelOrder("42");
     }
@@ -150,7 +153,7 @@ public class ShoppingService extends Application<DropwizardServiceConfig> {
       try {
         Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
-        e.printStackTrace();
+        logger.warn(e.getMessage());
       }
       if (updateInventory.incrementAndGet() % 3 == 0) {
         return stylingApi.addStyle("21");
