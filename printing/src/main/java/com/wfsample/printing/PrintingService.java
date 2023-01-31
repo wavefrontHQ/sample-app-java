@@ -18,6 +18,8 @@ import com.wfsample.beachshirts.Void;
 import com.wfsample.common.BeachShirtsUtils;
 import com.wfsample.common.GrpcServiceConfig;
 
+import com.wfsample.common.TraceLoggerUtil;
+import io.grpc.ServerInterceptor;
 import org.apache.commons.lang3.BooleanUtils;
 
 import java.util.Random;
@@ -27,6 +29,9 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import static com.wfsample.common.BeachShirtsUtils.getRequestLatency;
 
@@ -36,6 +41,7 @@ import static com.wfsample.common.BeachShirtsUtils.getRequestLatency;
  * @author Srujan Narkedamalli (snarkedamall@wavefront.com).
  */
 public class PrintingService {
+  static Logger logger =  LogManager.getLogger(PrintingService.class);
 
   public PrintingService(GrpcServiceConfig config) throws Exception {
     ApplicationTags applicationTags = ReportingUtils.constructApplicationTags
@@ -61,7 +67,7 @@ public class PrintingService {
         new WavefrontServerTracerFactory.Builder(grpcReporter, applicationTags).
             withTracer(tracer).recordStreamingStats().build();
     ServerBuilder builder = ServerBuilder.forPort(config.getGrpcPort()).
-        addService(new PrintingImpl(config)).addStreamTracerFactory(tracerFactory);
+        addService(new PrintingImpl(config, tracer)).addStreamTracerFactory(tracerFactory);
     Server printingServer = builder.build();
     System.out.println("Starting printing server");
     printingServer.start();
@@ -75,6 +81,7 @@ public class PrintingService {
   }
 
   static class PrintingImpl extends PrintingGrpc.PrintingImplBase {
+    private WavefrontTracer tracer;
     private final GrpcServiceConfig conf;
     private final int globalErrorInterval;
     private final Random rand = new Random(0L);
@@ -82,9 +89,10 @@ public class PrintingService {
     private final AtomicInteger addcolor = new AtomicInteger(0);
     private final AtomicInteger restock = new AtomicInteger(0);
 
-    public PrintingImpl(GrpcServiceConfig grpcServiceConfig) {
+    public PrintingImpl(GrpcServiceConfig grpcServiceConfig, WavefrontTracer tracer) {
       this.conf = grpcServiceConfig;
       this.globalErrorInterval = grpcServiceConfig.getErrorInterval();
+      this.tracer = tracer;
     }
 
     @Override
@@ -96,7 +104,9 @@ public class PrintingService {
       }
       if (BeachShirtsUtils.isErrorRequest(print, globalErrorInterval, 20)) {
         // not enough ink to print shirts
+        TraceLoggerUtil.traceLog(logger, tracer, Level.WARN, "not enough ink to print shirts");
         responseObserver.onError(Status.RESOURCE_EXHAUSTED.asRuntimeException());
+        return;
       }
       for (int i = 0; i < request.getQuantity(); i++) {
         responseObserver.onNext(Shirt.newBuilder().setStyle(request.getStyleToPrint()).build());
@@ -114,7 +124,9 @@ public class PrintingService {
       }
       if (BeachShirtsUtils.isErrorRequest(addcolor, globalErrorInterval, 20)) {
         // not enough ink to print shirts
+        TraceLoggerUtil.traceLog(logger, tracer, Level.WARN, "unable to add color");
         responseObserver.onError(Status.INTERNAL.asRuntimeException());
+        return;
       }
       responseObserver.onNext(com.wfsample.beachshirts.Status.newBuilder().setStatus(true).build());
       responseObserver.onCompleted();
@@ -130,7 +142,9 @@ public class PrintingService {
       }
       if (BeachShirtsUtils.isErrorRequest(restock, globalErrorInterval, 20)) {
         // not enough ink to print shirts
+        TraceLoggerUtil.traceLog(logger, tracer, Level.WARN, "unable to restock color");
         responseObserver.onError(Status.UNAVAILABLE.asRuntimeException());
+        return;
       }
       responseObserver.onNext(com.wfsample.beachshirts.Status.newBuilder().setStatus(true).build());
       responseObserver.onCompleted();
@@ -146,7 +160,9 @@ public class PrintingService {
       }
       if (BeachShirtsUtils.isErrorRequest(restock, globalErrorInterval, 40)) {
         // not enough ink to print shirts
+        TraceLoggerUtil.traceLog(logger, tracer, Level.WARN, "unable to get available colors");
         responseObserver.onError(Status.CANCELLED.asRuntimeException());
+        return;
       }
       responseObserver.onNext(AvailableColors.newBuilder().
           addColors(Color.newBuilder().setColor("rgb").build()).build());

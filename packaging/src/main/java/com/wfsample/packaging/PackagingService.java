@@ -21,6 +21,7 @@ import com.wfsample.beachshirts.WrappingTypes;
 import com.wfsample.common.BeachShirtsUtils;
 import com.wfsample.common.GrpcServiceConfig;
 
+import com.wfsample.common.TraceLoggerUtil;
 import org.apache.commons.lang3.BooleanUtils;
 
 import java.util.Random;
@@ -30,6 +31,9 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import static com.wfsample.common.BeachShirtsUtils.getRequestLatency;
 
@@ -39,6 +43,7 @@ import static com.wfsample.common.BeachShirtsUtils.getRequestLatency;
  * @author Srujan Narkedamalli (snarkedamall@wavefront.com).
  */
 public class PackagingService {
+  static Logger logger =  LogManager.getLogger(PackagingService.class);
 
   public PackagingService(GrpcServiceConfig config) throws Exception {
     ApplicationTags applicationTags = ReportingUtils.constructApplicationTags
@@ -64,7 +69,7 @@ public class PackagingService {
         new WavefrontServerTracerFactory.Builder(grpcReporter, applicationTags).
             withTracer(tracer).recordStreamingStats().build();
     ServerBuilder builder = ServerBuilder.forPort(config.getGrpcPort()).
-        addService(new PackagingImpl(config)).addStreamTracerFactory(tracerFactory);
+        addService(new PackagingImpl(config, tracer)).addStreamTracerFactory(tracerFactory);
     Server packaging = builder.build();
     System.out.println("Starting Packaging server ...");
     packaging.start();
@@ -78,6 +83,7 @@ public class PackagingService {
   }
 
   static class PackagingImpl extends PackagingGrpc.PackagingImplBase {
+    private final WavefrontTracer tracer;
     private final GrpcServiceConfig conf;
     private final int globalErrorInterval;
     private final AtomicInteger getTypes = new AtomicInteger(0);
@@ -86,9 +92,10 @@ public class PackagingService {
     private final AtomicInteger giftWrap = new AtomicInteger(0);
     private final Random rand = new Random(0L);
 
-    public PackagingImpl(GrpcServiceConfig grpcServiceConfig) {
+    public PackagingImpl(GrpcServiceConfig grpcServiceConfig, WavefrontTracer tracer) {
       this.conf = grpcServiceConfig;
       this.globalErrorInterval = conf.getErrorInterval();
+      this.tracer = tracer;
     }
 
     @Override
@@ -100,7 +107,9 @@ public class PackagingService {
       }
       if (BeachShirtsUtils.isErrorRequest(wrap, globalErrorInterval, 40)) {
         // can't pack more than 10 shirts at once.
+        TraceLoggerUtil.traceLog(logger, tracer, Level.WARN, "can't pack more than 10 shirts at once");
         responseObserver.onError(Status.INTERNAL.asRuntimeException());
+        return;
       }
       responseObserver.onNext(PackedShirts.newBuilder().
           addAllShirts(request.getShirtsList()).
@@ -116,7 +125,7 @@ public class PackagingService {
       try {
         Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
-        e.printStackTrace();
+        TraceLoggerUtil.traceLog(logger, tracer, Level.WARN, e.getMessage());
       }
       if (request.getShirtsCount() > 40) {
         int resp = (int) Math.round(rand.nextDouble() *
@@ -124,7 +133,7 @@ public class PackagingService {
         try {
           Thread.sleep(getRequestLatency(1400, 200, rand));
         } catch (InterruptedException e) {
-          e.printStackTrace();
+          TraceLoggerUtil.traceLog(logger, tracer, Level.WARN, e.getMessage());
         }
         ByteString byteString = ByteString.copyFrom(new byte[resp]);
         responseObserver.onNext(GiftPack.newBuilder().setGiftMaterial(byteString).build());
@@ -143,9 +152,10 @@ public class PackagingService {
       try {
         Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
-        e.printStackTrace();
+        TraceLoggerUtil.traceLog(logger, tracer, Level.WARN, e.getMessage());
       }
       if (BeachShirtsUtils.isErrorRequest(restock, globalErrorInterval, 20)) {
+        TraceLoggerUtil.traceLog(logger, tracer, Level.WARN, "unable to restock materials");
         responseObserver.onError(Status.INTERNAL.asRuntimeException());
       } else {
         responseObserver.onNext(com.wfsample.beachshirts.Status.newBuilder().
@@ -159,9 +169,10 @@ public class PackagingService {
       try {
         Thread.sleep(getRequestLatency(100, 70, rand));
       } catch (InterruptedException e) {
-        e.printStackTrace();
+        TraceLoggerUtil.traceLog(logger, tracer, Level.WARN, e.getMessage());
       }
       if (BeachShirtsUtils.isErrorRequest(getTypes, globalErrorInterval, 30)) {
+        TraceLoggerUtil.traceLog(logger, tracer, Level.WARN, "unable to get packing types");
         responseObserver.onError(Status.INTERNAL.asRuntimeException());
       } else {
         responseObserver.onNext(WrappingTypes.newBuilder().addWrappingType(WrappingType.

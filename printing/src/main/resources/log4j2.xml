@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="traceAppender" target="SYSTEM_OUT">
+            <JsonTemplateLayout eventTemplateUri="classpath:traceLog.json"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.wfsample.printing.PrintingService" level="INFO" additivity="false">
+            <AppenderRef ref="traceAppender"/>
+        </Logger>
+    </Loggers>
+</Configuration>

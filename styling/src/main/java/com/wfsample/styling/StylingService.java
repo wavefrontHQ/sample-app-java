@@ -30,6 +30,8 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import static com.wfsample.common.BeachShirtsUtils.getRequestLatency;
 
@@ -40,6 +42,7 @@ import static com.wfsample.common.BeachShirtsUtils.getRequestLatency;
  * @author Srujan Narkedamalli (snarkedamall@wavefront.com).
  */
 public class StylingService extends Application<DropwizardServiceConfig> {
+  static Logger logger = LogManager.getLogger(StylingService.class);
   private DropwizardServiceConfig configuration;
 
   private StylingService() {
@@ -112,6 +115,7 @@ public class StylingService extends Application<DropwizardServiceConfig> {
         Thread.sleep(getRequestLatency(20, 10, rand));
         return shirtStyleDTOS;
       } catch (Exception e) {
+        logger.warn("exception received on getAllStyles: " + e.getMessage());
         throw new RuntimeException(e);
       }
     }
@@ -137,6 +141,7 @@ public class StylingService extends Application<DropwizardServiceConfig> {
         }
         return new PackedShirtsDTO(packedShirts);
       } catch (Exception e) {
+        logger.warn("exception received on makeShirts: " + e.getMessage());
         throw new RuntimeException(e);
       }
     }
@@ -149,6 +154,7 @@ public class StylingService extends Application<DropwizardServiceConfig> {
         Thread.sleep(getRequestLatency(20, 10, rand));
         return Response.ok().build();
       } catch (Exception e) {
+        logger.warn("exception received on addStyle: " + e.getMessage());
         throw new RuntimeException(e);
       }
     }
@@ -162,6 +168,7 @@ public class StylingService extends Application<DropwizardServiceConfig> {
         packaging.restockMaterial(WrappingType.newBuilder().setWrappingType("wrap").build());
         return Response.ok().build();
       } catch (Exception e) {
+        logger.warn("exception received on restockStyle: " + e.getMessage());
         throw new RuntimeException(e);
       }
     }
