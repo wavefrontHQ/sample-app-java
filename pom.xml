@@ -153,25 +153,6 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.owasp</groupId>
-                    <artifactId>dependency-check-maven</artifactId>
-                    <version>8.1.2</version>
-                    <configuration>
-                        <failBuildOnCVSS>8</failBuildOnCVSS>
-                        <suppressionFiles>
-                            <suppressionFile>false-positive-one.xml</suppressionFile>
-                            <suppressionFile>some/path/false-positive-two.xml</suppressionFile>
-                        </suppressionFiles>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>

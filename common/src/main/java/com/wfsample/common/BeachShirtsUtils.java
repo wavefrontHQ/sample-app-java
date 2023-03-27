@@ -4,16 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLParser;
 import com.wavefront.sdk.jaxrs.client.WavefrontJaxrsClientFilter;
-
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
-import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.jboss.resteasy.client.jaxrs.engines.ApacheHttpClient43Engine;
 import org.jboss.resteasy.client.jaxrs.internal.ResteasyClientBuilderImpl;
 import org.jboss.resteasy.plugins.providers.jackson.ResteasyJackson2Provider;
-import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,10 +32,8 @@ public final class BeachShirtsUtils {
     HttpClient httpClient = HttpClientBuilder.create().setMaxConnTotal(2000).
         setMaxConnPerRoute(1000).build();
     ApacheHttpClient43Engine apacheHttpClient4Engine = new ApacheHttpClient43Engine(httpClient, true);
-    ResteasyProviderFactory factory = ResteasyProviderFactory.getInstance();
-    factory.registerProvider(ResteasyJackson2Provider.class);
-    ResteasyClient resteasyClient = new ResteasyClientBuilderImpl().
-        httpEngine(apacheHttpClient4Engine).providerFactory(factory).register(filter).build();
+    ResteasyClient resteasyClient = new ResteasyClientBuilderImpl().register(ResteasyJackson2Provider.class).
+        httpEngine(apacheHttpClient4Engine).register(filter).build();
     ResteasyWebTarget target = resteasyClient.target(url);
     return target.proxy(clazz);
   }
