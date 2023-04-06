@@ -18,7 +18,8 @@
     "npm-force-resolutions": "0.0.10"
   },
   "resolutions": {
-    "nth-check": "^2.0.1"
+    "nth-check": "^2.0.1",
+    "terser": "^5.14.2"
   },
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
