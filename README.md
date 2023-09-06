@@ -1,6 +1,3 @@
-```
-VMware has ended active development of this project, this repository will no longer be updated
-```
 # sample-app-java
 This is a sample java application called beachshirts which makes cool shirts for beach. 
 Beachshirts is built with a microservices architecture composed of dropwizard and gRPC frameworks.
