@@ -12,17 +12,15 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "react-scripts": "5.0.1",
-    "npm-force-resolutions": "0.0.10"
+    "react-scripts": "5.0.1"
   },
-  "resolutions": {
+  "overrides": {
     "nth-check": "^2.0.1",
     "resolve-url-loader": "^5.0.0",
     "terser": "^5.14.2",
     "optionator": "^0.9.3"
   },
   "scripts": {
-    "preinstall": "npx npm-force-resolutions",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
